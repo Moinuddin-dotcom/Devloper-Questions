@@ -18,7 +18,7 @@ export default function Navbar() {
         <li><a>Groups</a></li>
     </>
     return (
-        <div className="navbar bg-black text-white shadow-sm border-b-2 border-gray-300">
+        <div className="navbar bg-black text-white shadow-sm ">
             <div className="navbar-start">
                 <div className="dropdown">
                     <div tabIndex={0} role="button" className="btn btn-ghost lg:hidden">
