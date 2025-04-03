@@ -1,6 +1,7 @@
 'use client'
 // import { InteractiveHoverButton } from "@/components/magicui/interactive-hover-button";
 import { signOut, useSession } from "next-auth/react";
+import Image from "next/image";
 import Link from "next/link";
 // import { Button } from "@/components/ui/button"
 
@@ -17,7 +18,7 @@ export default function Navbar() {
         <li><a>Groups</a></li>
     </>
     return (
-        <div className="navbar bg-black text-white shadow-sm">
+        <div className="navbar bg-black text-white shadow-sm border-b-2 border-gray-300">
             <div className="navbar-start">
                 <div className="dropdown">
                     <div tabIndex={0} role="button" className="btn btn-ghost lg:hidden">
@@ -35,26 +36,43 @@ export default function Navbar() {
                 </ul>
             </div>
             <div className="navbar-center hidden md:flex">
-                {/* <li><a>Item 1</a></li>
-                    <li>
-                        <details>
-                            <summary>Parent</summary>
-                            <ul className="p-2">
-                                <li><a>Submenu 1</a></li>
-                                <li><a>Submenu 2</a></li>
-                                </ul>
-                                </details>
-                                </li>
-                                <li><a>Item 3</a></li> */}
-
                 <input type="text" placeholder="Search" className="input input-bordered w-24 md:w-auto text-black" />
             </div>
             <div className="navbar-end">
                 {status === "authenticated" ? <>
                     <div className="flex gap-1.5">
-                        <button
-                            onClick={() => signOut()}
-                            className="btn btn-sm md:btn-md bg-red-400">Log out</button>
+
+
+                        <div className="dropdown dropdown-end">
+                            <div tabIndex={0} role="button" className="btn btn-ghost btn-circle avatar">
+                                <div className="w-10 rounded-full">
+                                    <Image src={session?.user?.image || "/default-profile.png"} width={20} height={20} alt="Profile image" />
+                                </div>
+                            </div>
+                            <ul
+                                tabIndex={0}
+                                className="menu menu-sm dropdown-content bg-white text-black rounded-box z-1 mt-3 w-52 p-2 shadow">
+                                <li>
+                                    <a className="justify-between">
+                                        Profile
+                                        <span className="badge">New</span>
+                                    </a>
+                                </li>
+                                <li><a>Settings</a></li>
+                                <li>
+                                    <button
+                                        onClick={() => signOut()}
+                                        className="btn btn-sm md:btn-md bg-red-400">
+                                        Log out
+                                    </button>
+                                </li>
+                            </ul>
+                        </div>
+                        {/* </div> */}
+
+
+
+
                         <button className="btn btn-sm md:btn-md hover:bg-red-400"><span className="hidden md:flex">Add Questions</span> <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="size-6">
                             <path strokeLinecap="round" strokeLinejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
                         </svg></button>
@@ -74,6 +92,6 @@ export default function Navbar() {
                     </div>
                 </>}
             </div>
-        </div>
+        </div >
     )
 }
