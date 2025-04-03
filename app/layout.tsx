@@ -2,6 +2,8 @@ import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import Navbar from "@/components/Navbar";
+import { Toaster } from "react-hot-toast";
+import SessionWrapper from "@/Providers/SessionWrapper";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -26,9 +28,14 @@ export default function RootLayout({
   return (
     <html lang="en" data-theme='light'>
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
-        <Navbar />
-        {children}
+        className={`${geistSans.variable} ${geistMono.variable} antialiased `}>
+        <SessionWrapper>
+          <Toaster />
+          <Navbar />
+          <div className="h-screen bg-slate-950 text-white bg-[linear-gradient(to_right,#4f4f4f2e_1px,transparent_1px),linear-gradient(to_bottom,#4f4f4f2e_1px,transparent_1px)] bg-[size:14px_24px]">
+            {children}
+          </div>
+        </SessionWrapper>
       </body>
     </html>
   );
