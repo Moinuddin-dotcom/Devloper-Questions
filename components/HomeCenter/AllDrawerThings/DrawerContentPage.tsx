@@ -17,11 +17,12 @@ import axios from "axios";
 import { useState } from "react";
 import profilePic from "../../../public/assets/profile-pic.png"
 import Select from "react-select";
+import RichTextEiditor from "@/components/rich-text-eiditor";
 
 type FormData = {
   postType: "blog" | "question";
   content: string;
-  tags: { value: string; label: string }[]; // Multi-Select for programming languages
+  tags: { value: string; label: string }[];
 };
 
 // Programming Languages Options
@@ -42,9 +43,12 @@ export default function DrawerContentPage() {
   const { data: session } = useSession();
   const router = useRouter()
   const [selectedPostType, setSelectedPostType] = useState<'blog' | 'question' | null>(null)
+  const [editorContent, setEditorContent] = useState<string>("");
 
 
-  const { register, handleSubmit, control, reset, formState: { errors } } = useForm<FormData>(); // Pass type to useForm
+  const { register, handleSubmit, control, reset,
+    //  formState: { errors }
+  } = useForm<FormData>(); // Pass type to useForm
 
   const onSubmit: SubmitHandler<FormData> = async (data) => {
     try {
@@ -54,9 +58,10 @@ export default function DrawerContentPage() {
         name: session?.user?.name,
         email: session?.user?.email,
         image: session?.user?.image,
-        content: data.content,
+        // content: data.content,
+        content: editorContent,
         postType: data.postType,
-        tags: data.tags.map(tag => tag.value), // Extract only values from selected tags
+        tags: data.tags.map(tag => tag.value),
         postedAt: new Date(),
         comments: [],
         likes: 0,
@@ -84,7 +89,8 @@ export default function DrawerContentPage() {
   };
 
   return (
-    <DrawerContent className=" overflow-y-auto bg-gray-900 text-white rounded-lg">
+    <DrawerContent className="overflow-y-auto bg-gray-900 text-white rounded-lg">
+
       <DrawerHeader>
         <DrawerTitle className="text-lg text-white text-center font-semibold">Create a Post</DrawerTitle>
         <DrawerDescription className="text-gray-400 text-center">
@@ -133,8 +139,8 @@ export default function DrawerContentPage() {
       </div>
       <div>
         {/* Multi-Select for Tags */}
-        <div className="p-4">
-          <label className="block text-gray-300 mb-2">Select Programming Languages</label>
+        <div className="p-4 ">
+          <label className="block text-gray-300 mb-2 w-[80vw] mx-auto">Select Programming Languages</label>
           <Controller
             name="tags"
             control={control}
@@ -143,7 +149,7 @@ export default function DrawerContentPage() {
                 {...field}
                 options={programmingLanguages}
                 isMulti
-                className="w-full text-black"
+                className="w-[80vw] mx-auto text-black"
                 placeholder="Choose languages..."
               />
             )}
@@ -152,13 +158,9 @@ export default function DrawerContentPage() {
       </div>
 
       {/* Textarea for Post Content */}
-      <div className="p-4">
-        <textarea
-          {...register("content", { required: true })}
-          className="w-full p-3 border border-gray-600 bg-gray-800 rounded-lg text-white focus:outline-none focus:ring-2 focus:ring-blue-500"
-          placeholder="Share your thoughts..."
-        ></textarea>
-        {errors.content && <span className="text-red-500">Content is required</span>}
+      <div className="">
+
+        <RichTextEiditor setContent={setEditorContent} />
       </div>
 
       {/* Submit & Cancel Buttons */}
