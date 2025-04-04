@@ -11,19 +11,40 @@ import {
 import { useSession } from "next-auth/react";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
-import { useForm, SubmitHandler } from "react-hook-form"; // Import types from react-hook-form
+import { useForm, SubmitHandler, Controller } from "react-hook-form";
 import toast from "react-hot-toast";
 import axios from "axios";
+import { useState } from "react";
+import profilePic from "../../../public/assets/profile-pic.png"
+import Select from "react-select";
 
 type FormData = {
-  postType: "blog" | "question"; // Define the possible values for postType
-  content: string; // Content should be a string
+  postType: "blog" | "question";
+  content: string;
+  tags: { value: string; label: string }[]; // Multi-Select for programming languages
 };
+
+// Programming Languages Options
+const programmingLanguages = [
+  { value: "javascript", label: "JavaScript" },
+  { value: "python", label: "Python" },
+  { value: "java", label: "Java" },
+  { value: "csharp", label: "C#" },
+  { value: "cpp", label: "C++" },
+  { value: "php", label: "PHP" },
+  { value: "swift", label: "Swift" },
+  { value: "kotlin", label: "Kotlin" },
+  { value: "typescript", label: "TypeScript" },
+  { value: "ruby", label: "Ruby" },
+];
 
 export default function DrawerContentPage() {
   const { data: session } = useSession();
   const router = useRouter()
-  const { register, handleSubmit, reset, formState: { errors } } = useForm<FormData>(); // Pass type to useForm
+  const [selectedPostType, setSelectedPostType] = useState<'blog' | 'question' | null>(null)
+
+
+  const { register, handleSubmit, control, reset, formState: { errors } } = useForm<FormData>(); // Pass type to useForm
 
   const onSubmit: SubmitHandler<FormData> = async (data) => {
     try {
@@ -35,6 +56,7 @@ export default function DrawerContentPage() {
         image: session?.user?.image,
         content: data.content,
         postType: data.postType,
+        tags: data.tags.map(tag => tag.value), // Extract only values from selected tags
         postedAt: new Date(),
         comments: [],
         likes: 0,
@@ -42,7 +64,10 @@ export default function DrawerContentPage() {
       };
       console.log(userQuery);
 
-      const { data: dataPost } = await axios.post('http://localhost:3000/api/user-post', userQuery)
+      // Different API endpoints for different post types
+      const apiEndpoint = data.postType === 'blog' ? 'http://localhost:3000/api/blog' : 'http://localhost:3000/api/question';
+
+      const { data: dataPost } = await axios.post(apiEndpoint, userQuery)
       console.log(dataPost)
       // Access acknowledged from dataPost
       if (dataPost.acknowledged === true) {
@@ -70,7 +95,7 @@ export default function DrawerContentPage() {
       {/* User Profile Section */}
       <div className="flex justify-center items-center space-x-3 p-4">
         <Image
-          src={session?.user?.image || "/profile.png"}
+          src={session?.user?.image || profilePic}
           width={40}
           height={40}
           alt="User Profile"
@@ -88,8 +113,8 @@ export default function DrawerContentPage() {
             type="radio"
             value="blog"
             className="accent-blue-500"
-            required
-            {...register("postType")} // Only register the radio button
+            {...register("postType", { required: true })}
+            onChange={() => setSelectedPostType('blog')}
           />
           <span>📖 Make a Blog Post</span>
         </label>
@@ -98,31 +123,58 @@ export default function DrawerContentPage() {
             type="radio"
             value="question"
             className="accent-green-500"
-            required
-            {...register("postType")} // Only register the radio button
+            {...register("postType", { required: true })}
+            onChange={() => setSelectedPostType('question')}
           />
           <span>❓ Ask a Question</span>
         </label>
+
+
+      </div>
+      <div>
+        {/* Multi-Select for Tags */}
+        <div className="p-4">
+          <label className="block text-gray-300 mb-2">Select Programming Languages</label>
+          <Controller
+            name="tags"
+            control={control}
+            render={({ field }) => (
+              <Select
+                {...field}
+                options={programmingLanguages}
+                isMulti
+                className="w-full text-black"
+                placeholder="Choose languages..."
+              />
+            )}
+          />
+        </div>
       </div>
 
       {/* Textarea for Post Content */}
       <div className="p-4">
         <textarea
-          {...register("content", { required: true })} // Register the textarea for content
+          {...register("content", { required: true })}
           className="w-full p-3 border border-gray-600 bg-gray-800 rounded-lg text-white focus:outline-none focus:ring-2 focus:ring-blue-500"
           placeholder="Share your thoughts..."
         ></textarea>
-        {errors.content && <span className="text-red-500">Content is required</span>} {/* Validation error */}
+        {errors.content && <span className="text-red-500">Content is required</span>}
       </div>
 
       {/* Submit & Cancel Buttons */}
       <DrawerFooter className="px-4">
-        <Button
-          className="bg-blue-600 hover:bg-blue-700 text-white w-[200px] md:w-xl mx-auto py-2 rounded-lg cursor-pointer"
-          onClick={handleSubmit(onSubmit)} // Handle form submit
-        >
-          Post
-        </Button>
+        {selectedPostType && (
+          <Button
+            className={` w-[200px] md:w-xl mx-auto py-2 rounded-lg cursor-pointer ${selectedPostType === 'blog' ? 'bg-blue-600 hover:bg-blue-700 text-white' : 'bg-green-600 hover:bg-green-700 text-white'}`}
+            onClick={handleSubmit(onSubmit)}
+          >
+            {selectedPostType === 'blog' ? 'Post Blog' : 'Ask Question'}
+          </Button>
+        )}
+
+
+
+
         <DrawerClose asChild>
           <Button className="w-[200px] md:w-xl mx-auto py-2 mt-2 bg-red-600 hover:bg-red-700">
             Cancel

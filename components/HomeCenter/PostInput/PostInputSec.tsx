@@ -14,6 +14,7 @@ import {
     // DrawerTitle,
 } from "@/components/ui/drawer"
 import DrawerContentPage from "../AllDrawerThings/DrawerContentPage"
+import profilePic from "../../../public/assets/profile-pic.png"
 
 export default function PostInputSec() {
     const { data: session } = useSession()
@@ -24,7 +25,7 @@ export default function PostInputSec() {
                 {/* User Input Section */}
                 <div className="flex items-center space-x-3">
                     <Image
-                        src={session?.user?.image || "/profile.png"}
+                        src={session?.user?.image || profilePic}
                         width={40}
                         height={40}
                         alt="User Picture"

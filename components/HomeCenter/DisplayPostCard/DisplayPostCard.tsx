@@ -2,6 +2,7 @@
 import React, { useEffect, useState } from 'react'
 import axios from 'axios'
 import Image from 'next/image';
+import profilePic from '../../../public/assets/profile-pic.png'
 export default function DisplayPostCard() {
     interface CardData {
         _id: string;
@@ -16,14 +17,9 @@ export default function DisplayPostCard() {
     const [cardData, setCardData] = useState<CardData[]>([])
     console.log(cardData)
     useEffect(() => {
-        // const fetchPostedData = async () => {
-        //     const { data: postedData } = await axios("http://localhost:3000/api/user-post")
-        //     setCardData(postedData)
-        // }
-        // fetchPostedData()
         const fetchPostedData = async () => {
             try {
-                const { data: postedData } = await axios("http://localhost:3000/api/user-post");
+                const { data: postedData } = await axios("http://localhost:3000/api/blog");
 
                 // Ensure it's an array before setting state
                 if (Array.isArray(postedData)) {
@@ -46,7 +42,7 @@ export default function DisplayPostCard() {
                     {/* User Info */}
                     <div className="flex items-center space-x-3">
                         <Image
-                            src={cardRes?.image}
+                            src={cardRes?.image || profilePic}
                             alt='Profile Photo'
                             width={40}
                             height={40}

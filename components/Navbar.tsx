@@ -4,6 +4,7 @@ import { signOut, useSession } from "next-auth/react";
 import Image from "next/image";
 import Link from "next/link";
 // import { Button } from "@/components/ui/button"
+import profilePic from "../public/assets/profile-pic.png"
 
 
 
@@ -14,8 +15,7 @@ export default function Navbar() {
     console.log(session)
 
     const navLinks = <>
-        <li><a>Following</a></li>
-        <li><a>Groups</a></li>
+        <li><Link href={'/qus-ans'}>Questions</Link></li>
     </>
     return (
         <div className="navbar bg-black text-white shadow-sm ">
@@ -46,7 +46,7 @@ export default function Navbar() {
                         <div className="dropdown dropdown-end">
                             <div tabIndex={0} role="button" className="btn btn-ghost btn-circle avatar">
                                 <div className="w-10 rounded-full">
-                                    <Image src={session?.user?.image || "/default-profile.png"} width={20} height={20} alt="Profile image" />
+                                    <Image src={session?.user?.image || profilePic} width={20} height={20} alt="Profile image" />
                                 </div>
                             </div>
                             <ul

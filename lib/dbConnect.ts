@@ -4,7 +4,8 @@ import { MongoClient, ServerApiVersion } from "mongodb"
 
 export const collectionNameObj = {
     userCollection: "users",
-    postCollection: "user_posts",
+    blogCollection: "blogs",
+    questionCollection: "questions",
 
 }
 
