@@ -30,9 +30,9 @@ export default function DrawerContentPage() {
       console.log(data); // Handle form submission here
 
       const userQuery = {
-        userName: session?.user?.name,
-        userEmail: session?.user?.email,
-        userImage: session?.user?.image,
+        name: session?.user?.name,
+        email: session?.user?.email,
+        image: session?.user?.image,
         content: data.content,
         postType: data.postType,
         postedAt: new Date(),
@@ -41,15 +41,6 @@ export default function DrawerContentPage() {
         dislikes: 0,
       };
       console.log(userQuery);
-
-      // const res = await fetch('http://localhost:3000/api/user-post', {
-      //   method: 'POST',
-      //   headers: { 'Content-Type': 'application/json' },
-      //   body: JSON.stringify(userQuery),
-      // });
-
-      // const dataPost = await res.json();
-      // console.log(dataPost); // Log the response to check the structure
 
       const { data: dataPost } = await axios.post('http://localhost:3000/api/user-post', userQuery)
       console.log(dataPost)
