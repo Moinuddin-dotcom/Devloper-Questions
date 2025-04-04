@@ -6,10 +6,10 @@ import { NextResponse } from "next/server"
 export const GET = async () => {
     // const session = await getServerSession(authOptions)
     // if (session) {
-        // const email = session?.user?.email // Uncomment this line if you need the email for filtering
-        const questionCollection = dbConnect(collectionNameObj.questionCollection)
-        const result = await questionCollection.find({}).toArray() 
-        return NextResponse.json(result)
+    // const email = session?.user?.email // Uncomment this line if you need the email for filtering
+    const questionCollection = dbConnect(collectionNameObj.questionCollection)
+    const result = await questionCollection.find({}).toArray()
+    return NextResponse.json(result)
     // }
 
     // return NextResponse.json({})
