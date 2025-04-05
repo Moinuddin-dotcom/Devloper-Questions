@@ -8,20 +8,10 @@ export const GET = async (req: Request, { params }: { params: { id: string } }) 
     const p = await params
     const questionCollection = dbConnect(collectionNameObj.questionCollection)
     const query = { _id: new ObjectId(p.id) }
-
-
-    //validating is the owner of the booking or not
-    // const session = await getServerSession(authOptions)
-    // const email = session?.user?.email
     const singleQus = await questionCollection.findOne(query)
-    // const isOwnerOk = email === singleBooking?.email
-    // if (isOwnerOk) {
-    //     return NextResponse.json(singleBooking)
-    // } else {
-    //     return NextResponse.json({ message: "Forbidden GET access" }, { status: 403 })
-    // }
     return NextResponse.json(singleQus)
 }
+
 
 export const PATCH = async (req: Request, { params }: { params: { id: string } }) => {
     const p = await params
@@ -56,3 +46,53 @@ export const PATCH = async (req: Request, { params }: { params: { id: string } }
         updateRes
     });
 }
+
+
+
+// export const PATCH = async (req: Request, { params }: { params: { id: string } }) => {
+//     const p = await params
+//     const questionCollection = dbConnect(collectionNameObj.questionCollection)
+//     const postId = new ObjectId(p.id)
+//     const body = await req.json()
+//     const userEmail = body.user;
+//     const action = body.action; // "like" or "dislike"
+//     if (!userEmail) {
+//         return NextResponse.json({ message: "No user email provided" }, { status: 400 })
+//     }
+
+//     const post = await (await questionCollection).findOne({ _id: postId })
+//     if (!post) {
+//         return NextResponse.json({ message: "Post not found" }, { status: 404 })
+//     }
+
+
+//     let updateField, updateArray;
+//     if (action === 'like') {
+//         updateField = 'likes';
+//         updateArray = post.likes || [];
+
+//     } else if (action === 'dislike') {
+//         updateField = 'dislikes';
+//         updateArray = post.dislikes || [];
+//     } else {
+//         return NextResponse.json({ message: "Invalid action" }, { status: 400 })
+//     }
+
+//     const alreadyReacted = updateArray.includes(userEmail)
+//     let updatedArray;
+//     if (alreadyReacted) {
+//         updatedArray = updateArray.filter((email: string) => email !== userEmail)
+//     } else {
+//         updatedArray = [...updateArray, userEmail]
+
+//     }
+//     const updateRes = await (await questionCollection).updateOne(
+//         { _id: postId },
+//         { $set: { [updateField]: updatedArray }, }
+//     )
+//     return NextResponse.json({
+//         message: alreadyReacted ? `${action} removed` : `${action} added`,
+//         totalReactions: updatedArray.length,
+//         updateRes
+//     });
+// }

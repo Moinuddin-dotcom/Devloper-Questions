@@ -3,13 +3,14 @@
 import { MessageSquare, MoreVertical, Bookmark, Flag } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
-import { PiArrowFatDownLight } from "react-icons/pi";
+
 import LikeSection from "./LikeSection/LikeSection";
+import DisLikeSection from "./DisLikeSection/DisLikeSection";
 
 interface QuestionBoxFooterProps {
     comments: number;
 
-    cardData: { _id: string; content: string; tags: string[]; name: string; postedAt: string; likes: string[] }[];
+    cardData: { _id: string; content: string; tags: string[]; name: string; postedAt: string; likes: string[]; dislikes: string[] }[];
 }
 
 export default function QuestionBoxFooter({ comments, cardData }: QuestionBoxFooterProps) {
@@ -21,10 +22,7 @@ export default function QuestionBoxFooter({ comments, cardData }: QuestionBoxFoo
                 <LikeSection cardData={cardData} />
 
                 {/* Downvote Button */}
-                <Button
-                    className="text-gray-300 hover:text-red-500">
-                    <PiArrowFatDownLight />
-                </Button>
+                <DisLikeSection cardData={cardData} />
 
                 {/* Comments */}
                 <div className="flex items-center space-x-1 text-gray-900">
