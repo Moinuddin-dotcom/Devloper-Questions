@@ -1,3 +1,4 @@
+// import { PATCH } from './route';
 import dbConnect, { collectionNameObj } from "@/lib/dbConnect"
 import { ObjectId } from "mongodb"
 import { NextResponse } from "next/server"
@@ -22,55 +23,36 @@ export const GET = async (req: Request, { params }: { params: { id: string } }) 
     return NextResponse.json(singleQus)
 }
 
-export const PUT = async (req: Request, { params }: { params: { id: string } }) => {
+export const PATCH = async (req: Request, { params }: { params: { id: string } }) => {
     const p = await params
     const questionCollection = dbConnect(collectionNameObj.questionCollection)
-    const query = { _id: new ObjectId(p.id) }
+    const postId = new ObjectId(p.id)
     const body = await req.json()
-    const filter = {
-        $set: { ...body }
+    const userEmail = body.user;
+    if (!userEmail) {
+        return NextResponse.json({ message: "No user email provided" }, { status: 400 })
     }
-    const option = {
-        upsert: true
+
+    const post = await (await questionCollection).findOne({ _id: postId })
+    if (!post) {
+        return NextResponse.json({ message: "Post not found" }, { status: 404 })
     }
-    const updateRes = await questionCollection.updateOne(query, filter, option)
-    return NextResponse.json(updateRes)
+    const alreadyLiked = post.likes?.includes(userEmail)
+
+    let updateLikes;
+    if (alreadyLiked) {
+        updateLikes = post.likes.filter((email: string) => email !== userEmail)
+    } else {
+        updateLikes = [...(post.likes || []), userEmail]
+
+    }
+    const updateRes = await (await questionCollection).updateOne(
+        { _id: postId },
+        { $set: { likes: updateLikes } }
+    )
+    return NextResponse.json({
+        message: alreadyLiked ? "Like removed" : "Like added",
+        totalLikes: updateLikes.length,
+        updateRes
+    });
 }
-
-// export const PATCH = async (req: Request, { params }: { params: { id: string } }) => {
-//     try {
-//         const id = await params;
-//         const questionCollection = dbConnect(collectionNameObj.questionCollection);
-//         const { user } = await req.json(); // Get user email from request
-
-//         const question = await questionCollection.findOne({ _id: new ObjectId(id) });
-
-//         if (!question) {
-//             return NextResponse.json({ error: "Question not found" }, { status: 404 });
-//         }
-
-//         // Prevent duplicate upvotes from the same user
-//         if (question.likedBy?.includes(user)) {
-//             return NextResponse.json({ message: "Already upvoted", likes: question.likes });
-//         }
-
-//         // Increment likes and store the user who liked it
-//         const updateRes = await questionCollection.updateOne(
-//             { _id: new ObjectId(id) },
-//             {
-//                 $inc: { likes: 1 },
-//                 $push: { likedBy: user } // Store user in likedBy array to prevent multiple votes
-//             }
-//         );
-
-//         const updatedQuestion = await questionCollection.findOne(updateRes);
-
-//         if (!updatedQuestion) {
-//             return NextResponse.json({ error: "Failed to retrieve updated question" }, { status: 500 });
-//         }
-//         return NextResponse.json({ likes: updatedQuestion.likes });
-//     } catch (error) {
-//         console.error("Error updating likes:", error);
-//         return NextResponse.json({ error: "Failed to update likes" }, { status: 500 });
-//     }
-// };

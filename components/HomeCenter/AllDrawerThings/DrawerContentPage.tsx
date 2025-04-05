@@ -64,8 +64,8 @@ export default function DrawerContentPage() {
         tags: data.tags.map(tag => tag.value),
         postedAt: new Date(),
         comments: [],
-        likes: 0,
-        dislikes: 0,
+        likes: [],
+        dislikes: [],
       };
       console.log(userQuery);
 

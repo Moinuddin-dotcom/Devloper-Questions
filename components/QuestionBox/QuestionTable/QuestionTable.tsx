@@ -2,8 +2,6 @@
 import QuestionBoxFooter from "../QuestionBoxFooter/QuestionBoxFooter";
 
 interface QuestionTableProps {
-    // likes: number;
-    // setLikes: (likes: number) => void;
     comments: number;
     cardData: { _id: string; content: string; tags: string[]; name: string; postedAt: string }[];
 }
@@ -29,10 +27,9 @@ export default function QuestionTable({ comments, cardData }: QuestionTableProps
                     <div className="flex items-center mt-3 text-xs text-gray-500">
                         <span className="text-red-500 font-medium">{item.name}</span> • <span>{new Date(item.postedAt).toLocaleString()}</span>
                     </div>
+                    {/* Footer: Upvote(like), Downvote(dislike), Comment, Bookmark & Report */}
                     <div className="flex items-center justify-between w-full my-4">
                         <QuestionBoxFooter
-                            // likes={likes}
-                            // setLikes={setLikes}
                             comments={comments}
                             cardData={cardData} />
                     </div>
