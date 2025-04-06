@@ -3,7 +3,7 @@ import QuestionBoxFooter from "../QuestionBoxFooter/QuestionBoxFooter";
 
 interface QuestionTableProps {
     // comments: number;
-    cardData: { _id: string; content: string; tags: string[]; name: string; postedAt: string }[];
+    cardData: { _id: string; content: string; tags: string[]; name: string; postedAt: string; likes: string[]; dislikes: string[] }[];
 }
 
 export default function QuestionTable({ cardData }: QuestionTableProps) {

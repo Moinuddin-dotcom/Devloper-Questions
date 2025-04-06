@@ -4,6 +4,8 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 import QuestionTable from "@/components/QuestionBox/QuestionTable/QuestionTable";
+import Loading from "../loading";
+
 
 export default function DevQuestions() {
   interface CardData {
@@ -14,9 +16,12 @@ export default function DevQuestions() {
     content: string;
     tags: string[];
     comments: { text: string; user: string }[];
+    likes: string[];
+    dislikes: string[];
   }
 
   const [cardData, setCardData] = useState<CardData[]>([]);
+  const [loading, setLoading] = useState(true);
   console.log(cardData);
 
   useEffect(() => {
@@ -33,6 +38,8 @@ export default function DevQuestions() {
       } catch (error) {
         console.error("Error fetching posts:", error);
         setCardData([]);
+      } finally {
+        setLoading(false);
       }
     };
 
@@ -46,9 +53,12 @@ export default function DevQuestions() {
     <>
       <div className="grid grid-cols-1 md:grid-cols-[78%_20%] gap-2.5 h-screen">
         {/* Left side */}
-        <QuestionTable
-          cardData={cardData}
-        />
+        {loading ? (<Loading />) : (
+          <QuestionTable
+            cardData={cardData}
+          />
+        )}
+
         <div className="trending_question hidden md:block border-l border-gray-300">
           <h2 className="text-lg font-semibold mb-4">Trending Questions</h2>
 

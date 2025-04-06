@@ -15,7 +15,7 @@ export default function PostInputSec() {
 
     return (
         <Drawer>
-            <div className="border-2 border-gray-400 rounded-xl shadow-lg p-1 md:p-5 w-full">
+            <div className="border-2 border-gray-400 rounded-xl shadow-lg p-5 md:p-5 w-full">
                 {/* User Input Section */}
                 <div className="flex items-center space-x-3">
                     <Image

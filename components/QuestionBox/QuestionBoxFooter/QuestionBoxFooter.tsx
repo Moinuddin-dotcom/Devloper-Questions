@@ -17,7 +17,7 @@ export default function QuestionBoxFooter({ card }: QuestionBoxFooterProps) {
 
     return (
         <>
-            <div className="flex items-center space-x-4">
+            <div className="flex items-center gap-0.5 md:space-x-4">
                 {/* Upvote Button */}
                 <LikeSection card={card} />
 

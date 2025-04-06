@@ -71,13 +71,13 @@ export default function CommentSection({ card }: CommentSectionProps) {
         <Dialog onOpenChange={(open) => open && fetchQusData()}>
             <DialogTrigger asChild>
                 <Button className="bg-white hover:bg-white border text-gray-900 hover:text-gray-100">
-                    <div className="flex items-center space-x-1 text-gray-900">
+                    <div className="flex items-center sm:space-x-1 text-gray-900">
                         <MessageSquare className="w-5 h-5" />
-                        <span>Comments</span><span>({allComments?.length})</span>
+                        <span className='hidden md:flex'>Comments</span><span>({allComments?.length})</span>
                     </div>
                 </Button>
             </DialogTrigger>
-            <DialogContent className="sm:max-w-[425px] md:max-w-[40vw]">
+            <DialogContent className="sm:max-w-[425px] md:max-w-[88vw]">
                 <DialogHeader>
                     <DialogTitle>Comment section</DialogTitle>
                     <DialogDescription>

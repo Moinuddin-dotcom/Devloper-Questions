@@ -77,7 +77,7 @@ export default function CommentSection({ card }: CommentSectionProps) {
                     </div>
                 </Button>
             </DialogTrigger>
-            <DialogContent className="sm:max-w-[425px] md:max-w-[40vw]">
+            <DialogContent className="sm:max-w-[425px] md:max-w-[88vw]">
                 <DialogHeader>
                     <DialogTitle>Comment section</DialogTitle>
                     <DialogDescription>

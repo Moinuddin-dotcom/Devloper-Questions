@@ -51,12 +51,12 @@ export default function DisLikeSection({ card }: DisLikeSectionProps) {
         <>
             <Button
                 onClick={updateDislike}
-                className={`flex items-center space-x-1 border
+                className={`flex items-center sm:space-x-1 border
                     ${hasDisliked ? "bg-red-500" : "bg-white hover:bg-white"}
                     ${hasDisliked ? "text-white" : "text-gray-900 hover:text-red-500"}`}
             >
                 {hasDisliked ? <PiArrowFatDownFill className="text-white" /> : <PiArrowFatDownLight />}
-                <span><span className="font-semibold">Downvote</span> <span>({dislikeCount})</span></span>
+                <span className="flex justify-center items-center"><span className="font-semibold hidden md:flex">Downvote</span><span>({dislikeCount})</span></span>
             </Button>
         </>
     )
