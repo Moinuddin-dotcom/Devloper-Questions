@@ -1,6 +1,7 @@
 import React from 'react'
 import PostInputSec from './PostInput/PostInputSec'
-import DisplayPostCard from './DisplayPostCard/DisplayPostCard'
+import BlogBoxTable from './BlogBox/BlogBoxTable/BlogBoxTable';
+
 
 export default function HomeCenter() {
   return (
@@ -8,9 +9,8 @@ export default function HomeCenter() {
       <div className="flex flex-col items-center  min-h-screen">
         {/* Post Input Box */}
         <PostInputSec />
-
         {/* Post Card */}
-        <DisplayPostCard />
+        <BlogBoxTable />
 
       </div>
     </div>

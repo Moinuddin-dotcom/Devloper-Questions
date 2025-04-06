@@ -6,12 +6,6 @@ import { Button } from "@/components/ui/button"
 import {
     Drawer,
     DrawerTrigger,
-    // DrawerClose,
-    // DrawerContent,
-    // DrawerDescription,
-    // DrawerFooter,
-    // DrawerHeader,
-    // DrawerTitle,
 } from "@/components/ui/drawer"
 import DrawerContentPage from "../AllDrawerThings/DrawerContentPage"
 import profilePic from "../../../public/assets/profile-pic.png"

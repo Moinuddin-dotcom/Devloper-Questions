@@ -1,34 +1,31 @@
 
 
-import { MessageSquare, MoreVertical, Bookmark, Flag } from "lucide-react";
+import { MoreVertical, Bookmark, Flag } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
 
 import LikeSection from "./LikeSection/LikeSection";
 import DisLikeSection from "./DisLikeSection/DisLikeSection";
+import CommentSection from "./CommentSection/CommentSection";
 
 interface QuestionBoxFooterProps {
-    comments: number;
-
-    cardData: { _id: string; content: string; tags: string[]; name: string; postedAt: string; likes: string[]; dislikes: string[] }[];
+    card: { _id: string; content: string; tags: string[]; name: string; postedAt: string; likes: string[]; dislikes: string[] };
 }
 
-export default function QuestionBoxFooter({ comments, cardData }: QuestionBoxFooterProps) {
+
+export default function QuestionBoxFooter({ card }: QuestionBoxFooterProps) {
 
     return (
         <>
             <div className="flex items-center space-x-4">
                 {/* Upvote Button */}
-                <LikeSection cardData={cardData} />
+                <LikeSection card={card} />
 
                 {/* Downvote Button */}
-                <DisLikeSection cardData={cardData} />
+                <DisLikeSection card={card} />
 
                 {/* Comments */}
-                <div className="flex items-center space-x-1 text-gray-900">
-                    <MessageSquare className="w-5 h-5" />
-                    <span>{comments}</span>
-                </div>
+                <CommentSection card={card} />
             </div>
 
             <div>

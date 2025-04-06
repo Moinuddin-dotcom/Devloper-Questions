@@ -2,11 +2,11 @@
 import QuestionBoxFooter from "../QuestionBoxFooter/QuestionBoxFooter";
 
 interface QuestionTableProps {
-    comments: number;
+    // comments: number;
     cardData: { _id: string; content: string; tags: string[]; name: string; postedAt: string }[];
 }
 
-export default function QuestionTable({ comments, cardData }: QuestionTableProps) {
+export default function QuestionTable({ cardData }: QuestionTableProps) {
     return (
         <div className="question_part p-4 ">
             {cardData?.map(item => (
@@ -30,8 +30,7 @@ export default function QuestionTable({ comments, cardData }: QuestionTableProps
                     {/* Footer: Upvote(like), Downvote(dislike), Comment, Bookmark & Report */}
                     <div className="flex items-center justify-between w-full my-4">
                         <QuestionBoxFooter
-                            comments={comments}
-                            cardData={cardData} />
+                            card={item} />
                     </div>
                 </div>
             ))}

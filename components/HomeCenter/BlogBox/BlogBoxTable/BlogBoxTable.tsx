@@ -2,39 +2,45 @@
 import React, { useEffect, useState } from 'react'
 import axios from 'axios'
 import Image from 'next/image';
-import profilePic from '../../../public/assets/profile-pic.png'
-export default function DisplayPostCard() {
+import profilePic from '../../../../public/assets/profile-pic.png'
+import BlogBoxFooter from '../BlogBoxFooter/BlogBoxFooter';
+
+// interface BlogTableProps {
+//     cardData: { _id: string; content: string; tags: string[]; name: string; postedAt: string; image?: string }[];
+// }
+export default function BlogBoxTable() {
     interface CardData {
         _id: string;
         image: string;
         name: string;
         postedAt: string;
         content: string;
-        likes: number;
-        comments: { text: string; user: string }[]; // Add comments property
+        tags: string[];
+        comments: { text: string; user: string }[];
     }
 
-    const [cardData, setCardData] = useState<CardData[]>([])
-    console.log(cardData)
+    const [cardData, setCardData] = useState<CardData[]>([]);
+    console.log(cardData);
+
     useEffect(() => {
         const fetchPostedData = async () => {
             try {
-                const { data: postedData } = await axios("http://localhost:3000/api/blog");
+                const { data: postedData } = await axios.get("http://localhost:3000/api/blog");
 
-                // Ensure it's an array before setting state
                 if (Array.isArray(postedData)) {
                     setCardData(postedData);
                 } else {
                     console.error("API did not return an array:", postedData);
-                    setCardData([]); // Set to an empty array to avoid errors
+                    setCardData([]);
                 }
             } catch (error) {
                 console.error("Error fetching posts:", error);
-                setCardData([]); // Set an empty array on failure
+                setCardData([]);
             }
         };
+
         fetchPostedData();
-    }, [])
+    }, []);
     return (
         <>
             {cardData?.map(cardRes =>
@@ -56,7 +62,8 @@ export default function DisplayPostCard() {
 
                     {/* Post Content */}
                     <p className="mt-3 text-gray-700">
-                        {cardRes?.content}
+                        {/* Display Rich Text Content */}
+                        <div className="text-gray-700 mt-2 text-sm" dangerouslySetInnerHTML={{ __html: cardRes?.content }} />
                     </p>
 
                     {/* Post Images */}
@@ -75,15 +82,8 @@ export default function DisplayPostCard() {
 
                     {/* Reaction Buttons */}
                     <div className="flex justify-between mt-4 text-gray-500 text-sm">
-                        <button className="flex items-center space-x-1">
-                            👍 <span className="text-blue-500 font-semibold">Liked</span> <span>({cardRes?.likes})</span>
-                        </button>
-                        <button className="flex items-center space-x-1">
-                            💬 <span>Comment</span> <span>{cardRes?.comments.length}</span>
-                        </button>
-                        <button className="flex items-center space-x-1">
-                            🔄 <span>Share</span> <span>2</span>
-                        </button>
+                        <BlogBoxFooter
+                            card={cardRes} />
                     </div>
                 </div>
             )}

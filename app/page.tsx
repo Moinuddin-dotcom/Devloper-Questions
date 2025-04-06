@@ -1,7 +1,16 @@
+
 import HomeCenter from "@/components/HomeCenter/HomeCenter";
 import HomeLeft from "@/components/HomeLeft/HomeLeft";
 import HomeRight from "@/components/HomeRight/HomeRight";
 
+
+// interface CardData {
+//   // Define the structure of cardData here
+//   // Example:
+//   id: number;
+//   title: string;
+//   description: string;
+// }
 
 export default function Home() {
   return (

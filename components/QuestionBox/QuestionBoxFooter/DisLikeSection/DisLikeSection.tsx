@@ -6,13 +6,13 @@ import { useEffect, useState } from "react";
 import { PiArrowFatDownFill, PiArrowFatDownLight } from "react-icons/pi";
 
 
-interface QuestionBoxFooterProps {
-    cardData: { _id: string; content: string; tags: string[]; name: string; postedAt: string; dislikes: string[] }[];
+interface DisLikeSectionProps {
+    card: { _id: string; dislikes: string[] };
 }
-export default function DisLikeSection({ cardData }: QuestionBoxFooterProps) {
+export default function DisLikeSection({ card }: DisLikeSectionProps) {
     const session = useSession()
-    const postId = cardData[0]._id
-    const [dislikeCount, setDislikeCount] = useState(cardData[0]?.dislikes?.length || 0);
+    const postId = card._id
+    const [dislikeCount, setDislikeCount] = useState(card?.dislikes?.length || 0);
     const [hasDisliked, setHasDisliked] = useState(false);
 
 
@@ -45,8 +45,8 @@ export default function DisLikeSection({ cardData }: QuestionBoxFooterProps) {
     };
 
     useEffect(() => {
-        setHasDisliked(cardData[0]?.dislikes?.includes(session?.data?.user?.email || "") || false);
-    }, [cardData, session]);
+        setHasDisliked(card?.dislikes?.includes(session?.data?.user?.email || "") || false);
+    }, [card, session]);
     return (
         <>
             <Button

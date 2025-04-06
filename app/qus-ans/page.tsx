@@ -13,15 +13,11 @@ export default function DevQuestions() {
     postedAt: string;
     content: string;
     tags: string[];
-    // likes: number;
     comments: { text: string; user: string }[];
   }
 
   const [cardData, setCardData] = useState<CardData[]>([]);
   console.log(cardData);
-
-  // const [likes, setLikes] = useState(5000);
-  const [comments] = useState(80);
 
   useEffect(() => {
     const fetchPostedData = async () => {
@@ -43,17 +39,14 @@ export default function DevQuestions() {
     fetchPostedData();
   }, []);
 
-  
-  
+
+
 
   return (
     <>
       <div className="grid grid-cols-1 md:grid-cols-[78%_20%] gap-2.5 h-screen">
         {/* Left side */}
         <QuestionTable
-          // likes={likes}
-          // setLikes={setLikes}
-          comments={comments}
           cardData={cardData}
         />
         <div className="trending_question hidden md:block border-l border-gray-300">

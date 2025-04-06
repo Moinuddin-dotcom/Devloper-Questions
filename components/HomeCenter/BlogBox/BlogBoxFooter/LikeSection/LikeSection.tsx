@@ -21,7 +21,7 @@ export default function LikeSection({ card }: LikeSectionProps) {
     // fetching questionLike data
     const fetchQusData = async () => {
         try {
-            const { data } = await axios(`http://localhost:3000/api/single-qus/${postId}`);
+            const { data } = await axios(`http://localhost:3000/api/single-blog/${postId}`);
             setLikeCount(data?.likes?.length || 0);
             setHashLikeCount(data?.likes?.includes(session?.data?.user?.email));
         } catch (error) {
@@ -34,7 +34,7 @@ export default function LikeSection({ card }: LikeSectionProps) {
             const userEmail = session?.data?.user?.email;
             if (!userEmail) return;
 
-            const response = await axios.patch(`http://localhost:3000/api/single-qus/${postId}`, {
+            const response = await axios.patch(`http://localhost:3000/api/single-blog/${postId}`, {
                 user: userEmail,
             });
 
@@ -46,8 +46,13 @@ export default function LikeSection({ card }: LikeSectionProps) {
         }
     };
 
+    // useEffect(() => {
+    //     setHashLikeCount(card?.likes?.includes(session?.data?.user?.email || "") || false);
+    // }, [card, session]);
     useEffect(() => {
-        setHashLikeCount(card?.likes?.includes(session?.data?.user?.email || "") || false);
+        setHashLikeCount(
+            Array.isArray(card?.likes) && card.likes.includes(session?.data?.user?.email || "")
+        );
     }, [card, session]);
     return (
         <>
