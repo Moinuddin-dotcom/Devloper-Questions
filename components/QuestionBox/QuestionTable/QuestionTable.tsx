@@ -1,5 +1,7 @@
 
 import QuestionBoxFooter from "../QuestionBoxFooter/QuestionBoxFooter";
+import { format } from 'date-fns';
+
 
 interface QuestionTableProps {
     // comments: number;
@@ -25,7 +27,9 @@ export default function QuestionTable({ cardData }: QuestionTableProps) {
 
                     {/* User Info */}
                     <div className="flex items-center mt-3 text-xs text-gray-500">
-                        <span className="text-red-500 font-medium">{item.name}</span> • <span>{new Date(item.postedAt).toLocaleString()}</span>
+                        <span className="text-red-500 font-medium">{item.name}</span> • <span>
+                            {format(new Date(item?.postedAt), "dd-MMM''yy 'at' hh:mma")}
+                        </span>
                     </div>
                     {/* Footer: Upvote(like), Downvote(dislike), Comment, Bookmark & Report */}
                     <div className="flex items-center justify-between w-full my-4">

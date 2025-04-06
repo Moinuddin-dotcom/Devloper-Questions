@@ -5,6 +5,8 @@ import Image from 'next/image';
 import profilePic from '../../../../public/assets/profile-pic.png'
 import BlogBoxFooter from '../BlogBoxFooter/BlogBoxFooter';
 import Loading from '@/app/loading';
+import { format } from 'date-fns';
+
 
 // interface BlogTableProps {
 //     cardData: { _id: string; content: string; tags: string[]; name: string; postedAt: string; image?: string }[];
@@ -64,7 +66,9 @@ export default function BlogBoxTable() {
                                 />
                                 <div>
                                     <p className="font-semibold text-gray-800">{cardRes?.name}</p>
-                                    <p className="text-sm text-gray-500">{cardRes?.postedAt}</p>
+                                    <p className="text-sm text-gray-500">
+                                        {format(new Date(cardRes?.postedAt), "dd-MMM''yy 'at' hh:mma")}
+                                    </p>
                                 </div>
                             </div>
 
