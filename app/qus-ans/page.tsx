@@ -3,7 +3,7 @@
 
 import axios from "axios";
 import { useEffect, useState } from "react";
-import QuestionTable from "@/components/QuestionBox/QuestionTable/QuestionTable";
+import QuestionTable from "@/app/qus-ans/components/QuestionTable/QuestionTable";
 import Loading from "../loading";
 import { TypeAnimation } from 'react-type-animation';
 

@@ -73,10 +73,10 @@ export default function BlogBoxTable() {
                             </div>
 
                             {/* Post Content */}
-                            <p className="mt-3 text-gray-700">
+                            <div className="mt-3 text-gray-700">
                                 {/* Display Rich Text Content */}
                                 <div className="text-gray-700 mt-2 text-sm" dangerouslySetInnerHTML={{ __html: cardRes?.content }} />
-                            </p>
+                            </div>
 
                             {/* Post Images */}
                             <div className="grid grid-cols-2 gap-2 mt-3">

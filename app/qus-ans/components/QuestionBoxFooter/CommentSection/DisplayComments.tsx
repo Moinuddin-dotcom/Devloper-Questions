@@ -1,5 +1,5 @@
 import Image from "next/image";
-import profileImage from '../../../../public/assets/profile-pic.png'
+import profileImage from '@/public/assets/profile-pic.png'
 
 interface Comment {
     userName: string;

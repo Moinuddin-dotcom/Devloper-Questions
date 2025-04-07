@@ -15,7 +15,7 @@ import { Textarea } from "@/components/ui/textarea"
 import { MessageSquare } from 'lucide-react'
 import { useSession } from 'next-auth/react';
 import Image from 'next/image';
-import profilePic from '../../../../public/assets/profile-pic.png'
+import profilePic from '@/public/assets/profile-pic.png'
 import { useForm } from 'react-hook-form';
 import axios from 'axios';
 import toast from 'react-hot-toast';
