@@ -3,7 +3,7 @@
 
 import axios from "axios";
 import { useEffect, useState } from "react";
-import QuestionTable from "@/app/qus-ans/components/QuestionTable/QuestionTable";
+import QuestionTable from "@/components/QuestionBox/QuestionTable/QuestionTable";
 import Loading from "../loading";
 import { TypeAnimation } from 'react-type-animation';
 
@@ -52,7 +52,7 @@ export default function DevQuestions() {
 
   return (
     <>
-      <div className="grid grid-cols-1 md:grid-cols-[78%_20%] gap-2.5 h-screen">
+      <div className="grid grid-cols-1 md:grid-cols-[78%_20%] gap-2.5">
         {/* Left side */}
         {loading ? (<Loading />) : (
           <QuestionTable
