@@ -13,7 +13,7 @@ import { Textarea } from "@/components/ui/textarea"
 
 
 import { MessageSquare } from 'lucide-react'
-import { useSession } from 'next-auth/react';
+import { signIn, useSession } from 'next-auth/react';
 import Image from 'next/image';
 import profilePic from '../../../../../public/assets/profile-pic.png'
 import { useForm } from 'react-hook-form';
@@ -49,6 +49,11 @@ export default function CommentSection({ card }: CommentSectionProps) {
         }
     }
     const onSubmit = async (data: FormData) => {
+        if (!session) {
+            toast.error("You must be logged in to post a comment!");
+            signIn(undefined, { callbackUrl: window.location.href })
+            return;
+        }
         const commentUserData = {
             userName: session?.user?.name,
             userEmail: session?.user?.email,
@@ -77,45 +82,47 @@ export default function CommentSection({ card }: CommentSectionProps) {
                     </div>
                 </Button>
             </DialogTrigger>
-            <DialogContent className="sm:max-w-[425px] md:max-w-[88vw]">
-                <DialogHeader>
-                    <DialogTitle>Comment section</DialogTitle>
-                    <DialogDescription>
-                        Place your comment here.
-                    </DialogDescription>
-                </DialogHeader>
-
-                <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
-                    <div className="flex items-center justify-between space-x-3 border-b-2 border-gray-300 pb-4">
-                        <div className='flex items-center space-x-3'>
+            <DialogContent className="sm:max-w-[425px] md:max-w-[88vw] overflow-hidden">
+                <div className="overflow-y-auto max-h-[75vh] px-2">
+                    <DialogHeader>
+                        <DialogTitle>Comment section</DialogTitle>
+                        <DialogDescription>
+                            Read peoples thinking & Place your comment here.
+                        </DialogDescription>
+                    </DialogHeader>
+                    <DisplayComments allComments={allComments} />
+                    <div className="divider"></div>
+                    <form onSubmit={handleSubmit(onSubmit)} className="space-y-4 border border-gray-600 p-4 sticky bottom-0 bg-white z-50 rounded-lg">
+                        <div className="flex items-center justify-between space-x-3 border-b-2 border-gray-300 pb-4">
+                            <div className='flex items-center space-x-3'>
+                                <div>
+                                    <Image
+                                        src={session?.user?.image || profilePic}
+                                        alt='Profile Image'
+                                        width={40}
+                                        height={40}
+                                        className='rounded-full' />
+                                </div>
+                                <div className='flex flex-col'>
+                                    <p className='text-gray-900 font-semibold text-sm'>{session?.user?.name}</p>
+                                    <p className='text-gray-500 text-sm'>{session?.user?.email}</p>
+                                </div>
+                            </div>
                             <div>
-                                <Image
-                                    src={session?.user?.image || profilePic}
-                                    alt='Profile Image'
-                                    width={40}
-                                    height={40}
-                                    className='rounded-full' />
-                            </div>
-                            <div className='flex flex-col'>
-                                <p className='text-gray-900 font-semibold text-sm'>{session?.user?.name}</p>
-                                <p className='text-gray-500 text-sm'>{session?.user?.email}</p>
+                                <DialogFooter>
+                                    <Button type="submit" className='bg-white text-black border hover:text-white'>Post </Button>
+                                </DialogFooter>
                             </div>
                         </div>
-                        <div>
-                            <DialogFooter>
-                                <Button type="submit" className='bg-white text-black border hover:text-white'>Post </Button>
-                            </DialogFooter>
+                        <div className="">
+                            <Textarea placeholder="Type your message here."
+                                {...register("comment", { required: true })} />
                         </div>
-                    </div>
-                    <div className="">
-                        <Textarea placeholder="Type your message here."
-                            {...register("comment", { required: true })} />
-                    </div>
-                    {/* </div> */}
+                        {/* </div> */}
 
-                </form>
-                <div className="divider"></div>
-                <DisplayComments allComments={allComments} />
+                    </form>
+
+                </div>
             </DialogContent>
         </Dialog >
     )

@@ -39,7 +39,7 @@ export default function RichTextEiditor({ setContent }: { setContent: (content: 
     return (
         <div>
             <MenuBar editor={editor} />
-            <EditorContent editor={editor} />
+            <EditorContent editor={editor} className='overflow-y-auto' />
         </div>
     )
 }

@@ -89,80 +89,81 @@ export default function DrawerContentPage() {
   };
 
   return (
-    <DrawerContent className="overflow-y-auto bg-gray-900 text-white rounded-lg">
+    <DrawerContent className=" bg-gray-900 text-white rounded-lg overflow-hidden">
+      <div className="overflow-y-auto max-h-[75vh] px-2">
+        <DrawerHeader>
+          <DrawerTitle className="text-lg text-white text-center font-semibold">Create a Post</DrawerTitle>
+          <DrawerDescription className="text-gray-400 text-center">
+            Write your blog or ask a question.
+          </DrawerDescription>
+        </DrawerHeader>
 
-      <DrawerHeader>
-        <DrawerTitle className="text-lg text-white text-center font-semibold">Create a Post</DrawerTitle>
-        <DrawerDescription className="text-gray-400 text-center">
-          Write your blog or ask a question.
-        </DrawerDescription>
-      </DrawerHeader>
+        {/* User Profile Section */}
+        <div className="flex justify-center items-center space-x-3 p-4">
+          <Image
+            src={session?.user?.image || profilePic}
+            width={40}
+            height={40}
+            alt="User Profile"
+            className="rounded-full border border-blue-500"
+          />
+          <div>
+            <p className="font-medium">{session?.user?.name}</p>
+          </div>
+        </div>
 
-      {/* User Profile Section */}
-      <div className="flex justify-center items-center space-x-3 p-4">
-        <Image
-          src={session?.user?.image || profilePic}
-          width={40}
-          height={40}
-          alt="User Profile"
-          className="rounded-full border border-blue-500"
-        />
+        {/* Post Type Selection */}
+        <div className="md:flex justify-center items-center pl-10 md:gap-10">
+          <label className="flex items-center space-x-2">
+            <input
+              type="radio"
+              value="blog"
+              className="accent-blue-500"
+              {...register("postType", { required: true })}
+              onChange={() => setSelectedPostType('blog')}
+            />
+            <span>📖 Make a Blog Post</span>
+          </label>
+          <label className="flex items-center space-x-2">
+            <input
+              type="radio"
+              value="question"
+              className="accent-green-500"
+              {...register("postType", { required: true })}
+              onChange={() => setSelectedPostType('question')}
+            />
+            <span>❓ Ask a Question</span>
+          </label>
+
+
+        </div>
         <div>
-          <p className="font-medium">{session?.user?.name}</p>
+          {/* Multi-Select for Tags */}
+          <div className="p-4 ">
+            <label className="block text-gray-300 mb-2 w-[80vw] mx-auto">Select Programming Languages</label>
+            <Controller
+              name="tags"
+              control={control}
+              render={({ field }) => (
+                <Select
+                  {...field}
+                  options={programmingLanguages}
+                  isMulti
+                  className="w-[80vw] mx-auto text-black"
+                  placeholder="Choose languages..."
+                />
+              )}
+            />
+          </div>
         </div>
-      </div>
 
-      {/* Post Type Selection */}
-      <div className="md:flex justify-center items-center pl-10 md:gap-10">
-        <label className="flex items-center space-x-2">
-          <input
-            type="radio"
-            value="blog"
-            className="accent-blue-500"
-            {...register("postType", { required: true })}
-            onChange={() => setSelectedPostType('blog')}
-          />
-          <span>📖 Make a Blog Post</span>
-        </label>
-        <label className="flex items-center space-x-2">
-          <input
-            type="radio"
-            value="question"
-            className="accent-green-500"
-            {...register("postType", { required: true })}
-            onChange={() => setSelectedPostType('question')}
-          />
-          <span>❓ Ask a Question</span>
-        </label>
+        {/* Textarea for Post Content */}
+        <div className="">
 
-
-      </div>
-      <div>
-        {/* Multi-Select for Tags */}
-        <div className="p-4 ">
-          <label className="block text-gray-300 mb-2 w-[80vw] mx-auto">Select Programming Languages</label>
-          <Controller
-            name="tags"
-            control={control}
-            render={({ field }) => (
-              <Select
-                {...field}
-                options={programmingLanguages}
-                isMulti
-                className="w-[80vw] mx-auto text-black"
-                placeholder="Choose languages..."
-              />
-            )}
-          />
+          <RichTextEiditor setContent={setEditorContent} />
         </div>
+
       </div>
-
-      {/* Textarea for Post Content */}
-      <div className="">
-
-        <RichTextEiditor setContent={setEditorContent} />
-      </div>
-
       {/* Submit & Cancel Buttons */}
       <DrawerFooter className="px-4">
         {selectedPostType && (

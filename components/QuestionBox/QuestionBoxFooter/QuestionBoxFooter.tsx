@@ -1,12 +1,16 @@
 
 
-import { MoreVertical, Bookmark, Flag } from "lucide-react";
+import {
+    MoreVertical, Bookmark, Flag,
+    // Edit
+} from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
 
 import LikeSection from "./LikeSection/LikeSection";
 import DisLikeSection from "./DisLikeSection/DisLikeSection";
 import CommentSection from "./CommentSection/CommentSection";
+import DeleteSection from "./DeleteSection/DeleteSection";
 
 interface QuestionBoxFooterProps {
     card: { _id: string; content: string; tags: string[]; name: string; postedAt: string; likes: string[]; dislikes: string[] };
@@ -37,6 +41,13 @@ export default function QuestionBoxFooter({ card }: QuestionBoxFooterProps) {
                         </Button>
                     </DropdownMenuTrigger>
                     <DropdownMenuContent className="bg-white text-black p-2 rounded-lg shadow-md">
+                        {/* Edit */}
+                        {/* <DropdownMenuItem className="flex items-center space-x-2 hover:bg-gray-100 p-2 cursor-pointer">
+                            <Edit className="w-4 h-4" />
+                            <span>Edit</span>
+                        </DropdownMenuItem> */}
+                        {/* Delete btn */}
+                        <DeleteSection id={card._id} />
                         <DropdownMenuItem className="flex items-center space-x-2 hover:bg-gray-100 p-2 cursor-pointer">
                             <Bookmark className="w-4 h-4" />
                             <span>Bookmark</span>

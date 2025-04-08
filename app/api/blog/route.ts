@@ -3,6 +3,7 @@ import dbConnect, { collectionNameObj } from "@/lib/dbConnect"
 // import { getServerSession } from "next-auth"
 import { NextResponse } from "next/server"
 
+// Getting all blogcollection data
 export const GET = async () => {
     // const session = await getServerSession(authOptions)
     // if (session) {
@@ -15,7 +16,7 @@ export const GET = async () => {
     // return NextResponse.json({})
 }
 
-
+// posting on blogCollection
 export const POST = async (req: Request) => {
 
     const body = await req.json()

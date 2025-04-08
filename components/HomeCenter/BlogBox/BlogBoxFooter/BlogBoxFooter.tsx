@@ -4,6 +4,8 @@ import CommentSection from './CommentSection/CommentSection'
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from '@/components/ui/dropdown-menu'
 import { Button } from '@/components/ui/button'
 import { Bookmark, Flag, MoreVertical } from 'lucide-react'
+import DeleteSection from './DeleteSection/DeleteSection'
+// import EditSection from './EditSection/EditSection'
 
 
 interface BlogBoxFooterProps {
@@ -29,6 +31,10 @@ export default function BlogBoxFooter({ card }: BlogBoxFooterProps) {
             </Button>
           </DropdownMenuTrigger>
           <DropdownMenuContent className="bg-white text-black p-2 rounded-lg shadow-md">
+            {/* Edit */}
+            {/* <EditSection /> */}
+            {/* Delete button */}
+            <DeleteSection id={card._id} />
             <DropdownMenuItem className="flex items-center space-x-2 hover:bg-gray-100 p-2 cursor-pointer">
               <Bookmark className="w-4 h-4" />
               <span>Bookmark</span>

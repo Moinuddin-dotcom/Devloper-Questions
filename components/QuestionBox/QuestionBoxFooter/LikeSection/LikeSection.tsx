@@ -34,7 +34,7 @@ export default function LikeSection({ card }: LikeSectionProps) {
             const userEmail = session?.data?.user?.email;
             if (!userEmail) return;
 
-            const response = await axios.patch(`http://localhost:3000/api/single-qus/${postId}`, {
+            const response = await axios.patch(`http://localhost:3000/api/single-qus/${postId}/upvote`, {
                 user: userEmail,
             });
 
