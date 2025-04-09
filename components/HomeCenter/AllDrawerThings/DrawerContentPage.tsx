@@ -171,7 +171,12 @@ export default function DrawerContentPage() {
         {/* Textarea for Post Content */}
         <div className="">
 
-          <RichTextEiditor setContent={setEditorContent} setImageContent={setImageContent} />
+          <RichTextEiditor 
+            setContent={setEditorContent} 
+            setImageContent={(imageContent) => 
+              setImageContent(Array.isArray(imageContent) ? imageContent : [imageContent])
+            } 
+          />
         </div>
 
       </div>

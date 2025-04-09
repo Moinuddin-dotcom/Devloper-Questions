@@ -35,7 +35,7 @@ export default async function DevQuestions() {
           cardData={cardData}
         />
 
-        <QuestionTableTrending cardData={cardData}  />
+        <QuestionTableTrending cardData={cardData} />
       </div>
     </>
   );

@@ -30,6 +30,9 @@ export default function RichTextEiditor(
         }),
         Image.configure({
             inline: true, // Set image as inline (optional, depending on your need)
+            HTMLAttributes: {
+                class: 'w-full max-w-[500px] h-auto rounded-lg my-4',
+            },
         }),
         ],
         content: 'Write your content here...',
@@ -39,13 +42,15 @@ export default function RichTextEiditor(
             }
         },
         onUpdate: ({ editor }) => {
-            // setContent(editor.getHTML());
-            // Save the text content
-            const html = editor.getHTML();
-            setContent(html); // saves full HTML content
+            const fullHTML = editor.getHTML(); // includes text + image
 
-            const imageUrls = extractImageUrls(html); // extract multiple image srcs
-            setImageContent(imageUrls); // save as array
+            // ✅ Extract image URLs
+            const imageUrls = extractImageUrls(fullHTML);
+            setImageContent(imageUrls);
+
+            // ✅ Remove image tags from HTML before saving text-only content
+            const textOnlyHTML = fullHTML.replace(/<img[^>]*>/g, '');
+            setContent(textOnlyHTML);
         }
     })
 

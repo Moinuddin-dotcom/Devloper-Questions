@@ -2,6 +2,7 @@ import Image from 'next/image';
 import profilePic from '../../../../public/assets/profile-pic.png'
 import BlogBoxFooter from '../BlogBoxFooter/BlogBoxFooter';
 import { format } from 'date-fns';
+import { BlogTableImagePart } from './BlogTableImagePart';
 
 
 
@@ -11,6 +12,7 @@ interface CardData {
     name: string;
     postedAt: string;
     content: string;
+    contentImage?: string[]; // Added contentImage property
     tags: string[];
     likes: string[];
     dislikes: string[];
@@ -49,17 +51,8 @@ export default async function BlogBoxTable({ cardData }: { cardData: CardData[] 
                         </div>
 
                         {/* Post Images */}
-                        <div className="grid grid-cols-2 gap-2 mt-3">
-                            {/* <img
-                                src="https://source.unsplash.com/300x200/?mountain"
-                                alt="Trip"
-                                className="rounded-lg"
-                            />
-                            <img
-                                src="https://source.unsplash.com/300x200/?travel"
-                                alt="Trip"
-                                className="rounded-lg"
-                            /> */}
+                        <div className="">
+                            <BlogTableImagePart images={cardRes?.contentImage || []} />
                         </div>
 
                         {/* Reaction Buttons */}
