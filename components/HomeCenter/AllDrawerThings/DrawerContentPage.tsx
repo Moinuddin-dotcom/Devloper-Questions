@@ -11,13 +11,18 @@ import {
 import { useSession } from "next-auth/react";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
-import { useForm, SubmitHandler, Controller } from "react-hook-form";
+import {
+  useForm, SubmitHandler,
+  //  Controller
+
+} from "react-hook-form";
 import toast from "react-hot-toast";
 import axios from "axios";
 import { useState } from "react";
 import profilePic from "../../../public/assets/profile-pic.png"
-import Select from "react-select";
+// import Select from "react-select";
 import RichTextEiditor from "@/components/rich-text-eiditor";
+import { InteractiveHoverButton } from "@/components/magicui/interactive-hover-button";
 
 type FormData = {
   postType: "blog" | "question";
@@ -26,27 +31,30 @@ type FormData = {
 };
 
 // Programming Languages Options
-const programmingLanguages = [
-  { value: "javascript", label: "JavaScript" },
-  { value: "python", label: "Python" },
-  { value: "java", label: "Java" },
-  { value: "csharp", label: "C#" },
-  { value: "cpp", label: "C++" },
-  { value: "php", label: "PHP" },
-  { value: "swift", label: "Swift" },
-  { value: "kotlin", label: "Kotlin" },
-  { value: "typescript", label: "TypeScript" },
-  { value: "ruby", label: "Ruby" },
-];
+// const programmingLanguages = [
+//   { value: "javascript", label: "JavaScript" },
+//   { value: "python", label: "Python" },
+//   { value: "java", label: "Java" },
+//   { value: "csharp", label: "C#" },
+//   { value: "cpp", label: "C++" },
+//   { value: "php", label: "PHP" },
+//   { value: "swift", label: "Swift" },
+//   { value: "kotlin", label: "Kotlin" },
+//   { value: "typescript", label: "TypeScript" },
+//   { value: "ruby", label: "Ruby" },
+// ];
 
 export default function DrawerContentPage() {
   const { data: session } = useSession();
   const router = useRouter()
   const [selectedPostType, setSelectedPostType] = useState<'blog' | 'question' | null>(null)
   const [editorContent, setEditorContent] = useState<string>("");
+  const [imageContent, setImageContent] = useState<string[]>([]);
 
 
-  const { register, handleSubmit, control, reset,
+  const { register, handleSubmit,
+    // control,
+    reset,
     //  formState: { errors }
   } = useForm<FormData>(); // Pass type to useForm
 
@@ -60,8 +68,9 @@ export default function DrawerContentPage() {
         image: session?.user?.image,
         // content: data.content,
         content: editorContent,
+        contentImage: imageContent,
         postType: data.postType,
-        tags: data.tags.map(tag => tag.value),
+        // tags: data.tags.map(tag => tag.value),
         postedAt: new Date(),
         comments: [],
         likes: [],
@@ -113,33 +122,35 @@ export default function DrawerContentPage() {
         </div>
 
         {/* Post Type Selection */}
-        <div className="md:flex justify-center items-center pl-10 md:gap-10">
+        <div className="md:flex justify-center items-center pl-10 md:gap-10 space-y-2">
           <label className="flex items-center space-x-2">
-            <input
-              type="radio"
-              value="blog"
-              className="accent-blue-500"
-              {...register("postType", { required: true })}
-              onChange={() => setSelectedPostType('blog')}
-            />
-            <span>📖 Make a Blog Post</span>
+            <InteractiveHoverButton className="">
+              <input
+                type="radio"
+                value="blog"
+                className="accent-blue-500"
+                {...register("postType", { required: true })}
+                onChange={() => setSelectedPostType('blog')}
+              />
+              <span>📖 Make a Blog Post</span>
+            </InteractiveHoverButton>
           </label>
           <label className="flex items-center space-x-2">
-            <input
-              type="radio"
-              value="question"
-              className="accent-green-500"
-              {...register("postType", { required: true })}
-              onChange={() => setSelectedPostType('question')}
-            />
-            <span>❓ Ask a Question</span>
+            <InteractiveHoverButton className="">
+              <input
+                type="radio"
+                value="question"
+                className="accent-green-500"
+                {...register("postType", { required: true })}
+                onChange={() => setSelectedPostType('question')}
+              />
+              <span>❓ Ask a Question</span>
+            </InteractiveHoverButton>
           </label>
-
-
         </div>
         <div>
           {/* Multi-Select for Tags */}
-          <div className="p-4 ">
+          {/* <div className="p-4 ">
             <label className="block text-gray-300 mb-2 w-[80vw] mx-auto">Select Programming Languages</label>
             <Controller
               name="tags"
@@ -154,13 +165,13 @@ export default function DrawerContentPage() {
                 />
               )}
             />
-          </div>
+          </div> */}
         </div>
 
         {/* Textarea for Post Content */}
         <div className="">
 
-          <RichTextEiditor setContent={setEditorContent} />
+          <RichTextEiditor setContent={setEditorContent} setImageContent={setImageContent} />
         </div>
 
       </div>

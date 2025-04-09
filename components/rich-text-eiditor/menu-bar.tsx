@@ -1,16 +1,60 @@
 import {
     AlignCenter, AlignLeft, AlignRight, Bold, Heading1, Heading2, Heading3,
+    Image as ImageIcon,
     //  Highlighter, 
     Italic, List, ListOrdered, Strikethrough
 } from 'lucide-react';
 import React from 'react'
 import { Toggle } from '../ui/toggle';
 import { Editor } from '@tiptap/react'
+import toast from 'react-hot-toast';
+import axios from 'axios';
 
 export default function MenuBar({ editor }: { editor: Editor | null }) {
     if (!editor) {
         return null
     }
+
+    const handleImageUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
+        const file = e.target.files?.[0]
+        if (!file) return;
+
+
+        // FormData object to send the file to ImgBB
+        const formData = new FormData()
+        formData.append('image', file)
+
+        const API_KEY = process.env.NEXT_PUBLIC_IMGBB_API_KEY;
+        if (!API_KEY) {
+            console.error('API Key not found');
+            return;
+        }
+
+        // Posting the image
+        try {
+            const res = await axios.post(`https://api.imgbb.com/1/upload?key=${API_KEY}`, formData)
+            const result = res.data
+            if (result?.data?.url) {
+                // Insert the image URL into the editor
+                editor.chain().focus().setImage({ src: result.data.url }).run();
+
+                // Display success message using React Hot Toast
+                toast.success('Image uploaded successfully!');
+            } else {
+                toast.error('Image upload failed!');
+            }
+        } catch (error) {
+            if (error instanceof Error) {
+                toast.error(`Failed to upload Image. Please try again: ${error.message}`);
+            } else {
+                toast.error("Failed to upload Image. Please try again");
+            }
+        }
+    }
+
+
+
+
     const Options = [
         {
             icon: <Heading1 className="size-4" />,
@@ -67,11 +111,11 @@ export default function MenuBar({ editor }: { editor: Editor | null }) {
             onClick: () => editor.chain().focus().toggleOrderedList().run(),
             preesed: editor.isActive("orderedList"),
         },
-        // {
-        //     icon: <Highlighter className="size-4" />,
-        //     onClick: () => editor.chain().focus().toggleHighlight().run(),
-        //     preesed: editor.isActive("highlight"),
-        // },
+        {
+            icon: <ImageIcon className="size-4" />,
+            onClick: () => document.getElementById('image-upload')?.click(), // Trigger file input click
+            pressed: false,
+        },
     ];
 
     return (
@@ -85,6 +129,14 @@ export default function MenuBar({ editor }: { editor: Editor | null }) {
                     {option.icon}
                 </Toggle>
             ))}
+            {/* Hidden file input to select image */}
+            <input
+                id="image-upload"
+                type="file"
+                accept="image/*"
+                style={{ display: 'none' }}
+                onChange={handleImageUpload}
+            />
         </div>
     )
 }

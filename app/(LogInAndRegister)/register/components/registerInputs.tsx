@@ -7,6 +7,11 @@ import toast from 'react-hot-toast';
 import { useState } from 'react';
 import { FaEye, FaEyeSlash } from 'react-icons/fa';
 
+interface RegisterFormData {
+    name: string;
+    email: string;
+    password: string;
+}
 export default function RegisterInputs() {
     const router = useRouter();
     const {
@@ -17,11 +22,7 @@ export default function RegisterInputs() {
 
     const [showPassword, setShowPassword] = useState(false);
 
-    interface RegisterFormData {
-        name: string;
-        email: string;
-        password: string;
-    }
+
 
     const onSubmit = async (data: RegisterFormData) => {
         console.log(data);

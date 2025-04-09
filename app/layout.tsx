@@ -1,9 +1,10 @@
 import type { Metadata } from "next";
 import { Poppins } from "next/font/google";
 import "./globals.css";
-import Navbar from "@/components/Navbar";
+// import Navbar from "@/components/Navbar";
 import { Toaster } from "react-hot-toast";
 import SessionWrapper from "@/Providers/SessionWrapper";
+import LayoutWrapper from "@/components/LayoutWrapper/LayoutWrapper";
 
 
 const poppins = Poppins({
@@ -27,9 +28,11 @@ export default function RootLayout({
         className={`${poppins.className} antialiased `}>
         <SessionWrapper>
           <Toaster />
-          <Navbar />
+          {/* <Navbar /> */}
           <div className="h-screen bg-slate-950 text-white bg-[linear-gradient(to_right,#4f4f4f2e_1px,transparent_1px),linear-gradient(to_bottom,#4f4f4f2e_1px,transparent_1px)] bg-[size:14px_24px]">
-            {children}
+            <LayoutWrapper>
+              {children}
+            </LayoutWrapper>
           </div>
         </SessionWrapper>
       </body>

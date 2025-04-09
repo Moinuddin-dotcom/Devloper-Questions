@@ -1,23 +1,9 @@
-// import SocialLoginReg from "../components/SocialLoginReg";
-// import LoginInputs from "./components/LoginInputs";
-
-
-// export default function LoginPage() {
-//     return (
-//         <div>
-//             <LoginInputs />
-//             <div className="divider divider-accent">Social Logins</div>
-//             <SocialLoginReg />
-//         </div>
-//     )
-// }
-
 
 import React from 'react'
 import SocialLoginReg from '../components/SocialLoginReg'
 import backgroundImage from '@/public/assets/login-registerBG.jpg'
 import LoginAnimation from '@/app/(LogInAndRegister)/login/components/animation'
-import LoginInputs from './components/LoginInputs'
+import LoginInputsAnimation from './components/logInInputsAnimation'
 
 export default function RegisterPage() {
     return (
@@ -42,7 +28,8 @@ export default function RegisterPage() {
 
                 {/* Right side: form */}
                 <div className="w-full max-w-md mx-auto">
-                    <LoginInputs />
+                    {/* <LoginInputs /> */}
+                    <LoginInputsAnimation />
                     <div className="divider divider-accent">Social Logins</div>
                     <SocialLoginReg />
                 </div>

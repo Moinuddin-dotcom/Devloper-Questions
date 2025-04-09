@@ -9,6 +9,9 @@ import DrawerContentPage from "./HomeCenter/AllDrawerThings/DrawerContentPage";
 import { Button } from "./ui/button";
 import { InteractiveHoverButton } from "./magicui/interactive-hover-button";
 import { Bell, MessagesSquare } from "lucide-react";
+// import { SparklesText } from "@/registry/magicui/sparkles-text";
+import { SparklesText } from "@/components/magicui/sparkles-text"
+
 
 
 
@@ -35,13 +38,16 @@ export default function Navbar() {
                         {navLinks}
                     </ul>
                 </div>
-                <Link href={'/'} className="btn btn-ghost text-xl hidden lg:flex">DevQuestions</Link>
+                <Link href={'/'} className=" hidden lg:flex">
+                    <SparklesText text="DevQuestions" className="text-2xl" />
+
+                </Link>
                 <ul className="menu menu-horizontal px-1 hidden lg:flex">
                     {navLinks}
                 </ul>
             </div>
             <div className="navbar-center ">
-                <input type="text" placeholder="Search" className="input input-bordered w-24 md:w-auto text-black" />
+                <input type="text" placeholder="Search" className="input input-bordered w-32 md:w-sm lg:w-96 text-black" />
             </div>
             <div className="navbar-end">
                 {status === "authenticated" ? <>
@@ -100,11 +106,6 @@ export default function Navbar() {
                                 {/* <InteractiveHoverButton className="hidden md:flex">Add Question</InteractiveHoverButton> */}
                             </DrawerTrigger>
                             <DrawerTrigger asChild>
-                                {/* <Button className="cursor-pointer md:hidden flex items-center bg-black border border-red-500 text-white md:px-5 py-2 rounded-lg font-medium transition duration-300">
-                                    <span>Add Question</span><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="size-6">
-                                        <path strokeLinecap="round" strokeLinejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
-                                    </svg>
-                                </Button> */}
                                 <InteractiveHoverButton className="hidden md:flex">Add Question</InteractiveHoverButton>
                             </DrawerTrigger>
                         </div>
@@ -114,15 +115,13 @@ export default function Navbar() {
                 </> : <>
                     <div className="flex gap-1.5">
                         <Link href={'/login'}>
-
                             <button
                                 className="btn btn-sm md:btn-md bg-red-400">Log In</button>
                         </Link>
-                        <Link href={'/register'}>
-                            {/* <InteractiveHoverButton>Register</InteractiveHoverButton> */}
+                        {/* <Link href={'/register'}>
                             <button
                                 className="btn btn-sm md:btn-md bg-red-400">Register</button>
-                        </Link>
+                        </Link> */}
                     </div>
                 </>}
             </div>

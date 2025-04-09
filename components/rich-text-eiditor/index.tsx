@@ -4,8 +4,14 @@ import { useEditor, EditorContent } from '@tiptap/react'
 import StarterKit from '@tiptap/starter-kit'
 import MenuBar from './menu-bar'
 import TextAlign from "@tiptap/extension-text-align";
+import { Image } from '@tiptap/extension-image'
 
-export default function RichTextEiditor({ setContent }: { setContent: (content: string) => void }) {
+export default function RichTextEiditor(
+    { setContent, setImageContent }: {
+        setContent: (content: string) => void;
+        // setImageContent: (imageContent: string | string[]) => void;
+        setImageContent: (imageContent: string | string[]) => void;
+    }) {
     const editor = useEditor({
         extensions: [StarterKit.configure({
             bulletList: {
@@ -21,7 +27,10 @@ export default function RichTextEiditor({ setContent }: { setContent: (content: 
         }),
         TextAlign.configure({
             types: ['heading', 'paragraph'],
-        })
+        }),
+        Image.configure({
+            inline: true, // Set image as inline (optional, depending on your need)
+        }),
         ],
         content: 'Write your content here...',
         editorProps: {
@@ -30,16 +39,36 @@ export default function RichTextEiditor({ setContent }: { setContent: (content: 
             }
         },
         onUpdate: ({ editor }) => {
-            setContent(editor.getHTML());
+            // setContent(editor.getHTML());
+            // Save the text content
+            const html = editor.getHTML();
+            setContent(html); // saves full HTML content
+
+            const imageUrls = extractImageUrls(html); // extract multiple image srcs
+            setImageContent(imageUrls); // save as array
         }
     })
+
+    // Helper function to extract image URLs
+    const extractImageUrls = (content: string): string[] => {
+        const regex = /<img[^>]+src="([^">]+)"/g;
+        const images: string[] = [];
+        let match;
+        while ((match = regex.exec(content)) !== null) {
+            images.push(match[1]);
+        }
+        return images;
+    };
 
     // console.log('Drawer:--->', editor?.getHTML())
 
     return (
         <div>
             <MenuBar editor={editor} />
-            <EditorContent editor={editor} className='overflow-y-auto' />
+            <EditorContent editor={editor}
+                className="max-w-[80vw] mx-auto bg-gray-800 text-white h-[200px] resize-y overflow-auto rounded-md border border-gray-300 px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+
+            />
         </div>
     )
 }

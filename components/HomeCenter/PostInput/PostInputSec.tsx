@@ -2,13 +2,14 @@
 
 import { useSession } from "next-auth/react"
 import Image from "next/image"
-import { Button } from "@/components/ui/button"
+// import { Button } from "@/components/ui/button"
 import {
     Drawer,
     DrawerTrigger,
 } from "@/components/ui/drawer"
 import DrawerContentPage from "../AllDrawerThings/DrawerContentPage"
 import profilePic from "../../../public/assets/profile-pic.png"
+import { InteractiveHoverButton } from "@/components/magicui/interactive-hover-button"
 
 export default function PostInputSec() {
     const { data: session } = useSession()
@@ -39,9 +40,10 @@ export default function PostInputSec() {
                 <div className="flex justify-center mt-4 max-w-sm mx-auto gap-1">
                     {/* Blog Trigger */}
                     <DrawerTrigger asChild>
-                        <Button className="cursor-pointer flex items-center bg-blue-600 hover:bg-blue-700 text-white md:px-20 py-2 rounded-lg font-medium transition duration-300">
+                        {/* <Button className="cursor-pointer flex items-center bg-blue-600 hover:bg-blue-700 text-white md:px-20 py-2 rounded-lg font-medium transition duration-300">
                             ✍️ Add Blog
-                        </Button>
+                        </Button> */}
+                        <InteractiveHoverButton className="hidden md:flex">✍️ Add Blog</InteractiveHoverButton>
                     </DrawerTrigger>
 
                     {/* Question Trigger */}
