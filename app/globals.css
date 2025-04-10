@@ -114,49 +114,65 @@
   --color-sidebar-ring: var(--sidebar-ring);
   --animate-shimmer-slide: shimmer-slide var(--speed) ease-in-out infinite alternate;
   --animate-spin-around: spin-around calc(var(--speed) * 2) infinite linear;
+
   @keyframes shimmer-slide {
-  to {
-    transform: translate(calc(100cqw - 100%), 0);
+    to {
+      transform: translate(calc(100cqw - 100%), 0);
     }
   }
+
   @keyframes spin-around {
-  0% {
-    transform: translateZ(0) rotate(0);
+    0% {
+      transform: translateZ(0) rotate(0);
     }
-  15%, 35% {
-    transform: translateZ(0) rotate(90deg);
+
+    15%,
+    35% {
+      transform: translateZ(0) rotate(90deg);
     }
-  65%, 85% {
-    transform: translateZ(0) rotate(270deg);
+
+    65%,
+    85% {
+      transform: translateZ(0) rotate(270deg);
     }
-  100% {
-    transform: translateZ(0) rotate(360deg);
+
+    100% {
+      transform: translateZ(0) rotate(360deg);
     }
   }
-  --animate-pulse: pulse var(--duration) ease-out infinite
-;
+
+  --animate-pulse: pulse var(--duration) ease-out infinite;
+
   @keyframes pulse {
-  0%, 100% {
-    boxShadow: 0 0 0 0 var(--pulse-color);
+
+    0%,
+    100% {
+      boxShadow: 0 0 0 0 var(--pulse-color);
     }
-  50% {
-    boxShadow: 0 0 0 8px var(--pulse-color);
+
+    50% {
+      boxShadow: 0 0 0 8px var(--pulse-color);
     }
-  }}
+  }
+}
 
 @layer base {
   * {
     @apply border-border outline-ring/50;
   }
+
   body {
     @apply bg-background text-foreground;
   }
+
   h1 {
     @apply text-2xl font-bold;
   }
+
   h2 {
     @apply text-xl font-bold;
   }
+
   h3 {
     @apply text-lg font-bold;
   }
