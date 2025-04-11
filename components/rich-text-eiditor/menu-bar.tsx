@@ -24,15 +24,15 @@ export default function MenuBar({ editor }: { editor: Editor | null }) {
         const formData = new FormData()
         formData.append('image', file)
 
-        const API_KEY = process.env.NEXT_PUBLIC_IMGBB_API_KEY;
-        if (!API_KEY) {
+        const NEXT_PUBLIC_IMGBB_API_KEY = process.env.NEXT_PUBLIC_IMGBB_API_KEY;
+        if (!NEXT_PUBLIC_IMGBB_API_KEY) {
             console.error('API Key not found');
             return;
         }
 
         // Posting the image
         try {
-            const res = await axios.post(`https://api.imgbb.com/1/upload?key=${API_KEY}`, formData)
+            const res = await axios.post(`https://api.imgbb.com/1/upload?key=${NEXT_PUBLIC_IMGBB_API_KEY}`, formData)
             const result = res.data
             if (result?.data?.url) {
                 // Insert the image URL into the editor

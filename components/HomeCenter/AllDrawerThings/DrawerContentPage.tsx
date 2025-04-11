@@ -79,7 +79,7 @@ export default function DrawerContentPage() {
       console.log(userQuery);
 
       // Different API endpoints for different post types
-      const apiEndpoint = data.postType === 'blog' ? 'http://localhost:3000/api/blog' : 'http://localhost:3000/api/question';
+      const apiEndpoint = data.postType === 'blog' ? `${process.env.NEXT_PUBLIC_BASE_URL}/api/blog` : `${process.env.NEXT_PUBLIC_BASE_URL}/api/question`;
 
       const { data: dataPost } = await axios.post(apiEndpoint, userQuery)
       console.log(dataPost)

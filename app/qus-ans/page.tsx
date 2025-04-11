@@ -9,7 +9,7 @@ import QuestionTableTrending from "@/components/QuestionBox/QuestionTableTrendin
 
 const fetchPostedData = async () => {
   try {
-    const { data: postedData } = await axios.get("http://localhost:3000/api/question");
+    const { data: postedData } = await axios.get(`${process.env.NEXT_PUBLIC_BASE_URL}/api/question`);
     return postedData
   } catch (error) {
     console.error("Error fetching posts:", error);

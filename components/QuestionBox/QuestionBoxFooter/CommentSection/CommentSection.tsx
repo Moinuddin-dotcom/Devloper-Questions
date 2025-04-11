@@ -39,7 +39,7 @@ export default function CommentSection({ card }: CommentSectionProps) {
     const fetchQusData = async () => {
         // setLoading(true);
         try {
-            const { data } = await axios(`http://localhost:3000/api/single-qus/${card?._id}`);
+            const { data } = await axios(`${process.env.NEXT_PUBLIC_BASE_URL}/api/single-qus/${card?._id}`);
             // setAllComments(data?.comments || [])
             setAllComments(data?.comments || [])
             console.log(data)
@@ -53,7 +53,7 @@ export default function CommentSection({ card }: CommentSectionProps) {
     const onSubmit = async (data: FormData) => {
         if (!session) {
             toast.error("You must be logged in to post a comment!");
-            signIn(undefined, { callbackUrl: window.location.href }) // optional: redirect back after login
+            signIn(undefined, { callbackUrl: window.location.href }) 
             return;
         }
         const commentUserData = {
@@ -64,7 +64,7 @@ export default function CommentSection({ card }: CommentSectionProps) {
         };
         console.log("Comment data:", commentUserData);
         try {
-            const response = await axios.patch(`http://localhost:3000/api/single-qus/${card?._id}/comment`, commentUserData);
+            const response = await axios.patch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/single-qus/${card?._id}/comment`, commentUserData);
             console.log("Comment response:", response.data);
             toast.success("Comment added successfully!");
             // Optionally, you can refresh the comments or perform any other action here

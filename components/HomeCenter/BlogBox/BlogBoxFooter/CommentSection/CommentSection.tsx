@@ -37,7 +37,7 @@ export default function CommentSection({ card }: CommentSectionProps) {
     const fetchQusData = async () => {
         // setLoading(true);
         try {
-            const { data } = await axios(`http://localhost:3000/api/single-blog/${card?._id}`);
+            const { data } = await axios(`${process.env.NEXT_PUBLIC_BASE_URL}/api/single-blog/${card?._id}`);
             // setAllComments(data?.comments || [])
             setAllComments(data?.comments || [])
             console.log(data)
@@ -62,7 +62,7 @@ export default function CommentSection({ card }: CommentSectionProps) {
         };
         console.log("Comment data:", commentUserData);
         try {
-            const response = await axios.patch(`http://localhost:3000/api/single-blog/${card?._id}/comment`, commentUserData);
+            const response = await axios.patch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/single-blog/${card?._id}/comment`, commentUserData);
             console.log("Comment response:", response.data);
             toast.success("Comment added successfully!");
             // Optionally, you can refresh the comments or perform any other action here
