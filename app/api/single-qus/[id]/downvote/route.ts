@@ -25,7 +25,7 @@ export const PATCH = async (req: Request, { params }: { params: { id: string } }
         return NextResponse.json({ message: "Post not found" }, { status: 404 })
     }
     const alreadyDisliked = post.dislikes?.includes(userEmail);
-    const alreadyLiked = post.likes?.includes(userEmail);
+    // const alreadyLiked = post.likes?.includes(userEmail);
 
     let updateDislikes = [...(post.dislikes || [])];
     let updateLikes = [...(post.likes || [])];

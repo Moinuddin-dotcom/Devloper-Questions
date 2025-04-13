@@ -75,10 +75,10 @@ export default function Navbar() {
                                     tabIndex={0}
                                     className="menu menu-sm dropdown-content bg-white text-black rounded-box z-1 mt-3 w-52 p-2 shadow">
                                     <li>
-                                        <a className="justify-between">
+                                        <Link href={'/my-profile'} className="justify-between">
                                             Profile
-                                            <span className="badge">New</span>
-                                        </a>
+                                            {/* <span className="badge">New</span> */}
+                                        </Link>
                                     </li>
                                     <li><a>Settings</a></li>
                                     <li><a>Message</a></li>

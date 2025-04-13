@@ -8,9 +8,9 @@ import { authOptions } from "@/lib/authOptions"
 // import { authOptions } from "@/lib/auth" // Make sure this path is correct
 
 export const GET = async (req: Request, { params }: { params: { id: string } }) => {
-    const p = await params
+    const { id } = params
     const blogCollection = dbConnect(collectionNameObj.blogCollection)
-    const query = { _id: new ObjectId(p.id) }
+    const query = { _id: new ObjectId(id) }
     const singleBlog = await (await blogCollection).findOne(query)
     return NextResponse.json(singleBlog)
 }
@@ -22,9 +22,9 @@ export const PATCH = async (req: Request, { params }: { params: { id: string } }
         return NextResponse.json({ message: "Unauthorized" }, { status: 401 })
     }
 
-    const p = await params
+    const { id } = params
     const blogCollection = dbConnect(collectionNameObj.blogCollection)
-    const postId = new ObjectId(p.id)
+    const postId = new ObjectId(id)
     const body = await req.json()
     const { userName, userEmail, userImage, comment } = body
 

@@ -7,7 +7,7 @@ import { ReactNode } from "react"
 export default function LayoutWrapper({ children }: { children: ReactNode }) {
 
     const pathname = usePathname()
-    const hideNavbar = pathname === '/login' || pathname === '/register'
+    const hideNavbar = pathname === '/login' || pathname === '/register' || pathname === '/my-profile'
     return (
         <>
             {!hideNavbar && <Navbar />}

@@ -21,7 +21,7 @@ export default function SocialLoginReg() {
             toast.success("Login successfully");
             route.push("/")
         }
-    }, [session?.status])
+    }, [session?.status, route])
 
 
     return (
