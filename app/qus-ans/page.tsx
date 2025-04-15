@@ -13,6 +13,7 @@ const fetchPostedData = async () => {
     return postedData
   } catch (error) {
     console.error("Error fetching posts:", error);
+    return []
   }
 };
 
