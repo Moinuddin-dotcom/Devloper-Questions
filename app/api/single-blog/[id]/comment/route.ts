@@ -7,15 +7,15 @@ import { ObjectId } from "mongodb"
 import { NextRequest, NextResponse } from "next/server"
 import { getServerSession } from "next-auth"
 import { authOptions } from "@/lib/authOptions"
-
+import type { NextApiRequestContext } from "next";
 
 export async function GET(
     req: NextRequest,
-    context: { params: { id: string } }
+    { params }: { params: { id: string } }
 ) {
     try {
-        //   const id = params.id;
-        const id = context.params.id
+          const id = params.id;
+        // const id = context.params.id
 
         if (!id) {
             return NextResponse.json({ message: "Invalid request" }, { status: 400 });
@@ -86,7 +86,7 @@ export async function GET(
 
 export async function PATCH(
     req: NextRequest,
-    context: { params: { id: string } }
+    { params }: { params: { id: string } }
 ) {
     try {
         const session = await getServerSession(authOptions);
@@ -94,8 +94,8 @@ export async function PATCH(
         if (!session || !session.user?.email) {
             return NextResponse.json({ message: "Unauthorized" }, { status: 401 });
         }
-
-        const id = context.params.id;
+        const id = params.id;
+        // const id = context.params.id;
         if (!id) {
             return NextResponse.json({ message: "Invalid request" }, { status: 400 });
         }
