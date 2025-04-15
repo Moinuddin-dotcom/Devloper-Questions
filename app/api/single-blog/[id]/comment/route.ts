@@ -11,28 +11,29 @@ import { authOptions } from "@/lib/authOptions"
 
 export async function GET(
     req: NextRequest,
-    { params }: { params: { id: string } }
-  ) {
+    context: { params: { id: string } }
+) {
     try {
-      const id = params.id;
-  
-      if (!id) {
-        return NextResponse.json({ message: "Invalid request" }, { status: 400 });
-      }
-  
-      const blogCollection = await dbConnect(collectionNameObj.blogCollection);
-      const blog = await blogCollection.findOne({ _id: new ObjectId(id) });
-  
-      if (!blog) {
-        return NextResponse.json({ message: "Blog not found" }, { status: 404 });
-      }
-  
-      return NextResponse.json(blog);
+        //   const id = params.id;
+        const id = context.params.id
+
+        if (!id) {
+            return NextResponse.json({ message: "Invalid request" }, { status: 400 });
+        }
+
+        const blogCollection = await dbConnect(collectionNameObj.blogCollection);
+        const blog = await blogCollection.findOne({ _id: new ObjectId(id) });
+
+        if (!blog) {
+            return NextResponse.json({ message: "Blog not found" }, { status: 404 });
+        }
+
+        return NextResponse.json(blog);
     } catch (err) {
-      console.error("GET /comment error:", err);
-      return NextResponse.json({ message: "Internal server error" }, { status: 500 });
+        console.error("GET /comment error:", err);
+        return NextResponse.json({ message: "Internal server error" }, { status: 500 });
     }
-  }
+}
 
 
 // export async function PATCH(req: NextRequest , { params }: { params: { id: string } }) {
@@ -44,7 +45,7 @@ export async function GET(
 //         }
 //         const id = params.id
 //         if (!id) return NextResponse.json({ message: "Invalid request" }, { status: 400 });
-        
+
 //         const blogCollection = await dbConnect(collectionNameObj.blogCollection)
 //         const postId = new ObjectId(id)
 //         const body = await req.json()
@@ -85,53 +86,53 @@ export async function GET(
 
 export async function PATCH(
     req: NextRequest,
-    { params }: { params: { id: string } }
-  ) {
+    context: { params: { id: string } }
+) {
     try {
-      const session = await getServerSession(authOptions);
-  
-      if (!session || !session.user?.email) {
-        return NextResponse.json({ message: "Unauthorized" }, { status: 401 });
-      }
-  
-      const id = params.id;
-      if (!id) {
-        return NextResponse.json({ message: "Invalid request" }, { status: 400 });
-      }
-  
-      const { userName, userEmail, userImage, comment } = await req.json();
-  
-      if (!userEmail || !comment) {
-        return NextResponse.json({ message: "Missing required fields" }, { status: 400 });
-      }
-  
-      const blogCollection = await dbConnect(collectionNameObj.blogCollection);
-      const postId = new ObjectId(id);
-      const blog = await blogCollection.findOne({ _id: postId });
-  
-      if (!blog) {
-        return NextResponse.json({ message: "Post not found" }, { status: 404 });
-      }
-  
-      const newComment = {
-        userName,
-        userEmail,
-        userImage,
-        comment,
-        createdAt: new Date(),
-      };
-  
-      const updated = await blogCollection.updateOne(
-        { _id: postId },
-        { $push: { comments: newComment } }
-      );
-  
-      return NextResponse.json({
-        message: "Comment added successfully",
-        updated,
-      });
+        const session = await getServerSession(authOptions);
+
+        if (!session || !session.user?.email) {
+            return NextResponse.json({ message: "Unauthorized" }, { status: 401 });
+        }
+
+        const id = context.params.id;
+        if (!id) {
+            return NextResponse.json({ message: "Invalid request" }, { status: 400 });
+        }
+
+        const { userName, userEmail, userImage, comment } = await req.json();
+
+        if (!userEmail || !comment) {
+            return NextResponse.json({ message: "Missing required fields" }, { status: 400 });
+        }
+
+        const blogCollection = await dbConnect(collectionNameObj.blogCollection);
+        const postId = new ObjectId(id);
+        const blog = await blogCollection.findOne({ _id: postId });
+
+        if (!blog) {
+            return NextResponse.json({ message: "Post not found" }, { status: 404 });
+        }
+
+        const newComment = {
+            userName,
+            userEmail,
+            userImage,
+            comment,
+            createdAt: new Date(),
+        };
+
+        const updated = await blogCollection.updateOne(
+            { _id: postId },
+            { $push: { comments: newComment } }
+        );
+
+        return NextResponse.json({
+            message: "Comment added successfully",
+            updated,
+        });
     } catch (error) {
-      console.error("PATCH /comment error:", error);
-      return NextResponse.json({ message: "Internal server error" }, { status: 500 });
+        console.error("PATCH /comment error:", error);
+        return NextResponse.json({ message: "Internal server error" }, { status: 500 });
     }
-  }
+}
