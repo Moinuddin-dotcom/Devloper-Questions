@@ -1,7 +1,11 @@
 'use client'
-import Lottie from 'lottie-react'
+// import Lottie from 'lottie-react'
 import Link from 'next/link'
 import errorLotti from '@/public/assets/Error-Animation.json'
+import dynamic from 'next/dynamic'
+
+// Dynamically import Lottie with SSR disabled
+const Lottie = dynamic(() => import('lottie-react'), { ssr: false })
 
 export default function NotFoundPage404() {
     return (
