@@ -5,6 +5,7 @@
 // import dynamic from 'next/dynamic'
 
 
+
 // // Dynamically import Lottie with SSR disabled
 // const Lottie = dynamic(() => import('lottie-react'), { ssr: false })
 
@@ -20,12 +21,8 @@
 // }
 
 
-import dynamic from 'next/dynamic'
+import NotFoundClient from "@/components/NotFoundClient";
 
-const NotFoundClient = dynamic(() => import('@/components/NotFoundClient'), {
-    ssr: false,
-    loading: () => <p>Loading...</p>
-})
 
 export default function NotFoundPage() {
     return <NotFoundClient />
