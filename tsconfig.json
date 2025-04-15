@@ -22,6 +22,6 @@
       "@/*": ["./*"]
     }
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts", "app/actions/auth/registerUser.ts", "Providers/SessionWrapper.js", "app/api/single-blog/[id]/comment/route.js", "app/api/single-blog/[id]/route.js", "app/api/single-blog/[id]/upvote/route.js", "app/api/single-qus/[id]/comment/route.js", "app/api/single-qus/[id]/downvote/route.js", "app/api/single-qus/[id]/route.js"],
+  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts", "app/actions/auth/registerUser.ts", "Providers/SessionWrapper.js", "app/api/single-blog/[id]/comment/route.js", "app/api/single-blog/[id]/route.js", "app/api/single-blog/[id]/upvote/route.js", "app/api/single-qus/[id]/comment/route.js", "app/api/single-qus/[id]/downvote/route.js", "app/api/single-qus/[id]/route.js", "app/api/single-qus/[id]/upvote/route.js"],
   "exclude": ["node_modules"]
 }
