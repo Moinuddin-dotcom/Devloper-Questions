@@ -7,12 +7,18 @@ import { ObjectId } from "mongodb"
 import { NextRequest, NextResponse } from "next/server"
 import { getServerSession } from "next-auth"
 import { authOptions } from "@/lib/authOptions"
-import type { NextApiRequestContext } from "next";
+// import type { NextApiRequestContext } from "next";
+
+type RouteParams = {
+    params: {
+      id: string
+    }
+  }
 
 export async function GET(
     req: NextRequest,
-    { params }: { params: { id: string } }
-) {
+    { params }: RouteParams
+): Promise<NextResponse> {
     try {
           const id = params.id;
         // const id = context.params.id
@@ -86,8 +92,8 @@ export async function GET(
 
 export async function PATCH(
     req: NextRequest,
-    { params }: { params: { id: string } }
-) {
+    { params }: RouteParams
+): Promise<NextResponse> {
     try {
         const session = await getServerSession(authOptions);
 
