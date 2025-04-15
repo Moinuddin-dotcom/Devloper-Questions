@@ -2,7 +2,7 @@ import React from 'react'
 // import RegisterInputs from './components/registerInputs'
 import SocialLoginReg from '../components/SocialLoginReg'
 import backgroundImage from '@/public/assets/login-registerBG.jpg'
-import RegisterAnimation from '@/app/(LogInAndRegister)/register/components/animation'
+// import RegisterAnimation from '@/app/(LogInAndRegister)/register/components/animation'
 import RegisterInputsAnimation from './components/registerInputsAnimation'
 
 export default function RegisterPage() {
@@ -32,7 +32,7 @@ export default function RegisterPage() {
 
                 {/* Right side: form */}
                 <div className="hidden md:block">
-                    <RegisterAnimation />
+                    {/* <RegisterAnimation /> */}
                 </div>
             </div>
         </div>

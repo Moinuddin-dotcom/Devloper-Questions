@@ -2,7 +2,7 @@
 import React from 'react'
 import SocialLoginReg from '../components/SocialLoginReg'
 import backgroundImage from '@/public/assets/login-registerBG.jpg'
-import LoginAnimation from '@/app/(LogInAndRegister)/login/components/animation'
+// import LoginAnimation from '@/app/(LogInAndRegister)/login/components/animation'
 import LoginInputsAnimation from './components/logInInputsAnimation'
 
 export default function RegisterPage() {
@@ -23,7 +23,7 @@ export default function RegisterPage() {
 
                 {/* Left side animation */}
                 <div className="hidden md:block">
-                    <LoginAnimation />
+                    {/* <LoginAnimation /> */}
                 </div>
 
                 {/* Right side: form */}
