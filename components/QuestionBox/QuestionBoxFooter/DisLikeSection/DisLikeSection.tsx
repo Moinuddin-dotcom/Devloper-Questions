@@ -19,7 +19,7 @@ export default function DisLikeSection({ card }: DisLikeSectionProps) {
     // fetching questionLike data
     const fetchQusData = async () => {
         try {
-            const { data } = await axios(`${process.env.NEXT_PUBLIC_BASE_URL}/api/single-qus/${postId}`);
+            const { data } = await axios(`${process.env.NEXTAUTH_URL}/api/single-qus/${postId}`);
             setDislikeCount(data?.dislikes?.length || 0);
             setHasDisliked(data?.dislikes?.includes(session?.data?.user?.email));
         } catch (error) {
@@ -32,7 +32,7 @@ export default function DisLikeSection({ card }: DisLikeSectionProps) {
             const userEmail = session?.data?.user?.email;
             if (!userEmail) return;
 
-            const response = await axios.patch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/single-qus/${postId}/downvote`, {
+            const response = await axios.patch(`${process.env.NEXTAUTH_URL}/api/single-qus/${postId}/downvote`, {
                 user: userEmail,
             });
 

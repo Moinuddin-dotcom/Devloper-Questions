@@ -9,7 +9,7 @@ import toast from 'react-hot-toast'
 export default function DeleteSection({ id }: { id: string }) {
     const router = useRouter()
     const handleDelete = async (id: string) => {
-        const resDelete = await axios.delete(`${process.env.NEXT_PUBLIC_BASE_URL}/api/single-blog/${id}`)
+        const resDelete = await axios.delete(`${process.env.NEXTAUTH_URL}/api/single-blog/${id}`)
         console.log(resDelete)
         toast.success('Blog deleted sucessfully')
         router.refresh()

@@ -21,7 +21,7 @@ export default function LikeSection({ card }: LikeSectionProps) {
     // fetching questionLike data
     const fetchQusData = async () => {
         try {
-            const { data } = await axios(`${process.env.NEXT_PUBLIC_BASE_URL}/api/single-qus/${postId}`);
+            const { data } = await axios(`${process.env.NEXTAUTH_URL}/api/single-qus/${postId}`);
             setLikeCount(data?.likes?.length || 0);
             setHashLikeCount(data?.likes?.includes(session?.data?.user?.email));
         } catch (error) {
@@ -34,7 +34,7 @@ export default function LikeSection({ card }: LikeSectionProps) {
             const userEmail = session?.data?.user?.email;
             if (!userEmail) return;
 
-            const response = await axios.patch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/single-qus/${postId}/upvote`, {
+            const response = await axios.patch(`${process.env.NEXTAUTH_URL}/api/single-qus/${postId}/upvote`, {
                 user: userEmail,
             });
 

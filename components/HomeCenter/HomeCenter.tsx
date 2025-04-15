@@ -6,10 +6,11 @@ import axios from 'axios';
 
 const fetchPostedData = async () => {
   try {
-    const { data: postedData } = await axios.get(`${process.env.NEXT_PUBLIC_BASE_URL}/api/blog`);
+    const { data: postedData } = await axios.get(`${process.env.NEXTAUTH_URL}/api/blog`);
     return postedData
   } catch (error) {
     console.error("Error fetching posts:", error);
+    return []
   }
 };
 

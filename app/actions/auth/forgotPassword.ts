@@ -26,7 +26,7 @@ export const initiatePasswordReset = async (email: string) => {
     }
   );
 
-  const resetLink = `${process.env.NEXT_PUBLIC_BASE_URL}/reset-password?token=${resetToken}&email=${encodeURIComponent(email)}`;
+  const resetLink = `${process.env.NEXTAUTH_URL}/reset-password?token=${resetToken}&email=${encodeURIComponent(email)}`;
   try {
     await sendEmail({
       to: email,

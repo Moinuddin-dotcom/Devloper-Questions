@@ -6,7 +6,7 @@ import UserDataShowCase from './UserDataShowCase';
 
 const fetchPostedData = async () => {
   try {
-    const { data: postedData } = await axios.get(`${process.env.NEXT_PUBLIC_BASE_URL}/api/users`);
+    const { data: postedData } = await axios.get(`${process.env.NEXTAUTH_URL}/api/users`);
     return postedData
   } catch (error) {
     console.error("Error fetching posts:", error);
